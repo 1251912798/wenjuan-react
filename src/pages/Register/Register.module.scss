@@ -1,0 +1,11 @@
+.content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 64px - 67px);
+  h1 {
+    margin-bottom: 20px;
+  }
+}

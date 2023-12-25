@@ -1,0 +1,25 @@
+.header {
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    .left {
+      width: 200px;
+      text-align: center;
+        font-size: 32px;
+        color: #fff;
+    }
+    .right {
+        color: #fff;
+    }
+}
+
+.content {
+    background-color:#e8e9ed;
+    min-height: calc(100vh - 64px - 67.5px)
+}
+
+.footer {
+    text-align: center;
+    background-color: #f7f7f7;
+    border-top: 1px solid #e8e8e8;
+}

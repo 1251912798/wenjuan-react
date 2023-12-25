@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,9 +11,13 @@
     "@types/node": "^16.18.68",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
+    "antd": "^5.12.5",
+    "less": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
+    "sass": "^1.69.5",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -22,7 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
-    "format":"prettier --write \"src/**/*.{js,jsx,tsx,json}\"",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\"",
     "prepare": "husky install"
   },
   "eslintConfig": {

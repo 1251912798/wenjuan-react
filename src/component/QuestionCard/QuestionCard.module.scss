@@ -1,0 +1,15 @@
+.title_left {
+   color:rgb(2, 64, 252)
+}
+
+.title_right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+
+    .tag {
+        padding: 3px;
+        font-size: 12px;
+        background-color: red;
+    }
+}
