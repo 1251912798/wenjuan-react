@@ -1,9 +1,8 @@
 import { Spin, Empty } from 'antd'
 import ListSearch from '../../../component/ListSearch'
 import QuestionCard from '../../../component/QuestionCard'
-
-import styles from '../common.module.scss'
 import useLoadQusestionListData from '../../../hooks/useLoadQusestionListData'
+import styles from '../common.module.scss'
 
 const List = () => {
   // const { loading, data = {} } = useRequest(getQuestionListApi)

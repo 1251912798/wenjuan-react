@@ -2,6 +2,8 @@ import http from '../utils/request'
 
 type questionListParamsType = {
   keyword: string
+  isDeleted: boolean
+  isStar: boolean
 }
 
 // 创建问卷

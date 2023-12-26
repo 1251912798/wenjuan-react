@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { Table, Tag, Pagination, Space, Button } from 'antd'
+import { Table, Tag, Pagination, Space, Button, Spin, Empty, Divider } from 'antd'
 
 import ListSearch from '../../../component/ListSearch'
-
+import useLoadQusestionListData from '../../../hooks/useLoadQusestionListData'
 import styles from '../common.module.scss'
 import React, { useState } from 'react'
 
@@ -49,7 +49,6 @@ const questionData = [
   },
 ]
 const Trash = () => {
-  const [questionList, setQuestionList] = useState(questionData)
   const [selectedIds, setSelectedIds] = useState<React.Key[]>([])
   const [current, setCurrent] = useState(1)
 
@@ -74,6 +73,8 @@ const Trash = () => {
       dataIndex: 'createTime',
     },
   ]
+  const { data = {}, loading } = useLoadQusestionListData({ isDeleted: true })
+  const { list = [], total } = data // total = 0
 
   // 问卷选中
   const onSelectChange = (selectedRowKeys: React.Key[]) => {
@@ -94,32 +95,42 @@ const Trash = () => {
           <ListSearch />
         </div>
       </div>
-      <div>
-        <Space style={{ marginBottom: '15px' }}>
-          <Button type="primary" disabled={!selectedIds.length}>
-            恢复
-          </Button>
-          <Button danger disabled={!selectedIds.length}>
-            彻底删除
-          </Button>
-        </Space>
-        <Table
-          dataSource={questionList}
-          columns={columns}
-          rowSelection={rowSelection}
-          pagination={false}
-          rowKey={record => record.id}
-        ></Table>
-      </div>
-      <div className={styles.footer}>
-        <Pagination
-          current={current}
-          defaultCurrent={1}
-          defaultPageSize={5}
-          showSizeChanger={false}
-          total={questionList.length}
-        ></Pagination>
-      </div>
+      {loading && (
+        <div style={{ textAlign: 'center' }}>
+          <Spin />
+        </div>
+      )}
+      {!loading && list.length === 0 && <Empty description="暂无数据"></Empty>}
+      {list.length > 0 && (
+        <>
+          <div>
+            <Space style={{ marginBottom: '15px' }}>
+              <Button type="primary" disabled={!selectedIds.length}>
+                恢复
+              </Button>
+              <Button danger disabled={!selectedIds.length}>
+                彻底删除
+              </Button>
+            </Space>
+            <Table
+              dataSource={list}
+              columns={columns}
+              rowSelection={rowSelection}
+              pagination={false}
+              rowKey={record => record.id}
+            ></Table>
+          </div>
+          <div className={styles.footer}>
+            <Pagination
+              current={current}
+              defaultCurrent={1}
+              defaultPageSize={5}
+              showSizeChanger={false}
+              total={total}
+            ></Pagination>
+          </div>
+        </>
+      )}
     </>
   )
 }
