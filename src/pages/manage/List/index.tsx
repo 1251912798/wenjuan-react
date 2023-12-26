@@ -1,55 +1,16 @@
-import { useState } from 'react'
-
+import { Spin, Empty } from 'antd'
 import ListSearch from '../../../component/ListSearch'
 import QuestionCard from '../../../component/QuestionCard'
-import styles from '../common.module.scss'
 
-const questionData = [
-  {
-    id: 'q1',
-    title: '问卷1',
-    isPublished: false,
-    isStar: true,
-    answerCount: 4,
-    createTime: '3月09 日 13:11',
-  },
-  {
-    id: 'q2',
-    title: '问卷2',
-    isPublished: true,
-    isStar: false,
-    answerCount: 18,
-    createTime: '3月12日 13:11',
-  },
-  {
-    id: 'q3',
-    title: '问卷3',
-    isPublished: false,
-    isStar: true,
-    answerCount: 10,
-    createTime: '3月11日 13:11',
-  },
-  {
-    id: 'q4',
-    title: '问卷4',
-    isPublished: true,
-    isStar: false,
-    answerCount: 21,
-    createTime: '3月11日 13:11',
-  },
-  {
-    id: 'q5',
-    title: '问卷5',
-    isPublished: true,
-    isStar: false,
-    answerCount: 55,
-    createTime: '3月12日 13:11',
-  },
-]
+import styles from '../common.module.scss'
+import useLoadQusestionListData from '../../../hooks/useLoadQusestionListData'
 
 const List = () => {
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const [questionList, setQuestionList] = useState(questionData)
+  // const { loading, data = {} } = useRequest(getQuestionListApi)
+
+  const { data = {}, loading } = useLoadQusestionListData()
+  const { list = [] } = data // total = 0
+
   // 问卷搜索
   return (
     <>
@@ -59,10 +20,14 @@ const List = () => {
           <ListSearch />
         </div>
       </div>
-      <div>
-        {questionList.map(item => {
-          return <QuestionCard key={item.id} {...item}></QuestionCard>
-        })}
+      <div style={{ textAlign: 'center' }}>
+        {loading && <Spin />}
+        {list.length < 0 && <Empty></Empty>}
+        {!loading &&
+          list.length &&
+          list.map((item: any) => {
+            return <QuestionCard key={item.id} {...item}></QuestionCard>
+          })}
       </div>
       <div className={styles.footer}>Footer</div>
     </>

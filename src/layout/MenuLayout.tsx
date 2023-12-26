@@ -1,30 +1,46 @@
-import { Button, Divider, Space } from 'antd'
+import { Button, Divider, Space, message } from 'antd'
 import {
   UnorderedListOutlined,
   StarOutlined,
   DeleteOutlined,
   PlusOutlined,
 } from '@ant-design/icons'
+import { useRequest } from 'ahooks'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import styles from './MenuLayout.module.scss'
+import { createQuestionApi } from '../api/question'
 const MenuLayout = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
+
   const buttonType = (path: string) => {
     return pathname.split('/')[2] === path ? 'default' : 'text'
   }
-
+  // 切换问卷页Tab
   const handlePath = (path: string) => {
     if (path === pathname.split('/')[2]) return
-
-    console.log('123')
     navigate(path)
   }
+
+  // 点击新建问卷
+  const { loading, run: onCreateQuestion } = useRequest(createQuestionApi, {
+    manual: true,
+    onSuccess: result => {
+      navigate(`/question/edit/${result.id}`)
+      message.success('创建成功~')
+    },
+  })
+
   return (
     <>
       <div className={styles.content}>
         <div className={styles.left}>
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button
+            loading={loading}
+            onClick={onCreateQuestion}
+            type="primary"
+            icon={<PlusOutlined />}
+          >
             新建问卷
           </Button>
           <Divider />
