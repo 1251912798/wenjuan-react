@@ -1,14 +1,13 @@
 import { Spin, Empty } from 'antd'
 import ListSearch from '../../../component/ListSearch'
 import QuestionCard from '../../../component/QuestionCard'
+import ListPage from '@/component/ListPage'
 import useLoadQusestionListData from '../../../hooks/useLoadQusestionListData'
 import styles from '../common.module.scss'
 
 const List = () => {
-  // const { loading, data = {} } = useRequest(getQuestionListApi)
-
   const { data = {}, loading } = useLoadQusestionListData()
-  const { list = [] } = data // total = 0
+  const { list = [], total = 0 } = data //
 
   // 问卷搜索
   return (
@@ -28,7 +27,9 @@ const List = () => {
             return <QuestionCard key={item.id} {...item}></QuestionCard>
           })}
       </div>
-      <div className={styles.footer}>Footer</div>
+      <div className={styles.footer}>
+        <ListPage total={total} />
+      </div>
     </>
   )
 }

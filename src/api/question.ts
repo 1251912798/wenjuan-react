@@ -4,6 +4,8 @@ type questionListParamsType = {
   keyword: string
   isDeleted: boolean
   isStar: boolean
+  page: number
+  pageSize: number
 }
 
 // 创建问卷

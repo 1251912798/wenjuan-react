@@ -1,7 +1,12 @@
 import { useSearchParams } from 'react-router-dom'
 import { useRequest } from 'ahooks'
 import { getQuestionListApi } from '../api/question'
-import { LIST_SEARCH_KEY } from '../consts'
+import {
+  LIST_SEARCH_KEY,
+  LIST_PAGE_SIZE_DEFAULT,
+  LIST_PAGE_SIZE_KEY,
+  LIST_PAGE_KEY,
+} from '../consts'
 
 type optionsType = {
   isDeleted: boolean
@@ -15,8 +20,9 @@ const useLoadQusestionListData = (options: Partial<optionsType> = {}) => {
   const { loading, data, error } = useRequest(
     async () => {
       const keyword = searchParams.get(LIST_SEARCH_KEY) || ''
-
-      const data = await getQuestionListApi({ keyword, isDeleted, isStar })
+      const page = +(searchParams.get(LIST_PAGE_KEY) || '') || 1
+      const pageSize = +(searchParams.get(LIST_PAGE_SIZE_KEY) || '') || LIST_PAGE_SIZE_DEFAULT
+      const data = await getQuestionListApi({ keyword, isDeleted, isStar, page, pageSize })
       return data
     },
     {

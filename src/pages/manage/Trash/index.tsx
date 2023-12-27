@@ -5,52 +5,10 @@ import ListSearch from '../../../component/ListSearch'
 import useLoadQusestionListData from '../../../hooks/useLoadQusestionListData'
 import styles from '../common.module.scss'
 import React, { useState } from 'react'
+import ListPage from '@/component/ListPage'
 
-const questionData = [
-  {
-    id: 'q1',
-    title: '问卷1',
-    isPublished: false,
-    isStar: true,
-    answerCount: 4,
-    createTime: '3月09 日 13:11',
-  },
-  {
-    id: 'q2',
-    title: '问卷2',
-    isPublished: true,
-    isStar: false,
-    answerCount: 18,
-    createTime: '3月12日 13:11',
-  },
-  {
-    id: 'q3',
-    title: '问卷3',
-    isPublished: false,
-    isStar: true,
-    answerCount: 10,
-    createTime: '3月11日 13:11',
-  },
-  {
-    id: 'q4',
-    title: '问卷4',
-    isPublished: true,
-    isStar: false,
-    answerCount: 21,
-    createTime: '3月11日 13:11',
-  },
-  {
-    id: 'q5',
-    title: '问卷5',
-    isPublished: true,
-    isStar: false,
-    answerCount: 55,
-    createTime: '3月12日 13:11',
-  },
-]
 const Trash = () => {
   const [selectedIds, setSelectedIds] = useState<React.Key[]>([])
-  const [current, setCurrent] = useState(1)
 
   const columns = [
     {
@@ -74,7 +32,7 @@ const Trash = () => {
     },
   ]
   const { data = {}, loading } = useLoadQusestionListData({ isDeleted: true })
-  const { list = [], total } = data // total = 0
+  const { list = [], total = 0 } = data // total = 0
 
   // 问卷选中
   const onSelectChange = (selectedRowKeys: React.Key[]) => {
@@ -121,13 +79,7 @@ const Trash = () => {
             ></Table>
           </div>
           <div className={styles.footer}>
-            <Pagination
-              current={current}
-              defaultCurrent={1}
-              defaultPageSize={5}
-              showSizeChanger={false}
-              total={total}
-            ></Pagination>
+            <ListPage total={total} />
           </div>
         </>
       )}

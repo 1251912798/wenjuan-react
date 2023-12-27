@@ -3,10 +3,11 @@ import QuestionCard from '../../../component/QuestionCard'
 import ListSearch from '../../../component/ListSearch'
 import useLoadQusestionListData from '../../../hooks/useLoadQusestionListData'
 import styles from '../common.module.scss'
+import ListPage from '@/component/ListPage'
 
 const Star = () => {
   const { data = {}, loading } = useLoadQusestionListData({ isStar: true })
-  const { list = [] } = data // total = 0
+  const { list = [], total = 0 } = data
   return (
     <>
       <div className={styles.header}>
@@ -17,12 +18,13 @@ const Star = () => {
       </div>
       <div style={{ textAlign: 'center' }}>
         {loading && <Spin />}
-        {list.length < 0 && <Empty></Empty>}
-        {list.map((item: any) => (
-          <QuestionCard key={item.id} {...item}></QuestionCard>
-        ))}
+        {!loading && list.length === 0 && <Empty></Empty>}
+        {list.length > 0 &&
+          list.map((item: any) => <QuestionCard key={item.id} {...item}></QuestionCard>)}
       </div>
-      <div className={styles.footer}>Footer</div>
+      <div className={styles.footer}>
+        <ListPage total={total} />
+      </div>
     </>
   )
 }
