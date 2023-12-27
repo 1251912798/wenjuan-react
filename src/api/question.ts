@@ -17,3 +17,13 @@ export const getQuestionDetailApi = (id: number | string) => http.get(`/api/ques
 // 获取问卷列表
 export const getQuestionListApi = (params: Partial<questionListParamsType>) =>
   http.get('/api/question', params)
+
+// 修改问卷信息
+export const updatedQusetionApi = (id: number | string, options: { [key: string]: any }) =>
+  http.patch(`/api/question/${id}`, options)
+
+// 复制问卷
+export const copyQuestionApi = (id: number | string) => http.post(`/api/qusetion/duplicate/${id}`)
+
+// 删除问卷
+export const deleteQuestionApi = (id: number | string) => http.delete(`/api/question/delete/${id}`)

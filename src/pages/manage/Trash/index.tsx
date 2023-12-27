@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { Table, Tag, Pagination, Space, Button, Spin, Empty, Divider } from 'antd'
+import { Table, Tag, Pagination, Space, Button, Spin, Empty, Divider, message } from 'antd'
 
 import ListSearch from '../../../component/ListSearch'
 import useLoadQusestionListData from '../../../hooks/useLoadQusestionListData'
 import styles from '../common.module.scss'
 import React, { useState } from 'react'
 import ListPage from '@/component/ListPage'
+import { updatedQusetionApi } from '@/api/question'
+import { useRequest } from 'ahooks'
 
 const Trash = () => {
   const [selectedIds, setSelectedIds] = useState<React.Key[]>([])
@@ -31,12 +33,14 @@ const Trash = () => {
       dataIndex: 'createTime',
     },
   ]
-  const { data = {}, loading } = useLoadQusestionListData({ isDeleted: true })
-  const { list = [], total = 0 } = data // total = 0
+  const { data = {}, loading, refresh } = useLoadQusestionListData({ isDeleted: true })
+  const { list = [], total = 0 } = data
 
   // 问卷选中
   const onSelectChange = (selectedRowKeys: React.Key[]) => {
-    console.log('selectedRo wKeys changed: ', selectedRowKeys)
+    console.log(selectedRowKeys)
+    console.log(selectedIds)
+
     setSelectedIds(selectedRowKeys)
   }
 
@@ -45,6 +49,24 @@ const Trash = () => {
     selectedIds,
     onChange: onSelectChange,
   }
+
+  // 恢复
+  const { run: recover, loading: recoverLoading } = useRequest(
+    async () => {
+      for await (const id of selectedIds) {
+        await updatedQusetionApi(id as string | number, { isDeleted: false })
+      }
+    },
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success('恢复成功')
+        setSelectedIds([])
+        refresh()
+      },
+    }
+  )
+
   return (
     <>
       <div className={styles.header}>
@@ -63,10 +85,15 @@ const Trash = () => {
         <>
           <div>
             <Space style={{ marginBottom: '15px' }}>
-              <Button type="primary" disabled={!selectedIds.length}>
+              <Button
+                loading={recoverLoading}
+                onClick={recover}
+                type="primary"
+                disabled={selectedIds.length == 0}
+              >
                 恢复
               </Button>
-              <Button danger disabled={!selectedIds.length}>
+              <Button danger disabled={selectedIds.length == 0}>
                 彻底删除
               </Button>
             </Space>

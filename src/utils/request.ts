@@ -8,7 +8,10 @@ const instance = axios.create({
 // 响应拦截
 instance.interceptors.response.use(res => {
   const resData = (res.data || {}) as ResType
+
   const { code, data, msg } = resData
+  console.log(resData)
+
   if (code !== 0) {
     if (msg) {
       message.error(msg)
@@ -22,6 +25,8 @@ instance.interceptors.response.use(res => {
 const http = {
   get: (url: string, params?: resDataType): Promise<resDataType> => instance.get(url, { params }),
   post: (url: string, data?: resDataType): Promise<resDataType> => instance.post(url, data),
+  patch: (url: string, data?: resDataType): Promise<resDataType> => instance.patch(url, data),
+  delete: (url: string, data?: resDataType): Promise<resDataType> => instance.delete(url, data),
 }
 
 export default http
