@@ -1,9 +1,24 @@
 import { message } from 'antd'
 import axios from 'axios'
 
-const instance = axios.create({
+import { getToken } from '@/utils/user-token'
+import type { AxiosInstance } from 'axios'
+
+const instance: AxiosInstance = axios.create({
   timeout: 5000,
 })
+
+// 请求拦截
+instance.interceptors.request.use(
+  config => {
+    const token = getToken()
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`
+    }
+    return config
+  },
+  error => Promise.reject(error)
+)
 
 // 响应拦截
 instance.interceptors.response.use(res => {

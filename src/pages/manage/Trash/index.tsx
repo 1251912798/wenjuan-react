@@ -1,14 +1,15 @@
-/* eslint-disable no-unused-vars */
-import { Table, Tag, Pagination, Space, Button, Spin, Empty, Divider, message } from 'antd'
+import React, { useState } from 'react'
+import { Table, Tag, Modal, Space, Button, Spin, Empty, message } from 'antd'
+import { useRequest } from 'ahooks'
+import { ExclamationCircleFilled } from '@ant-design/icons'
 
 import ListSearch from '../../../component/ListSearch'
 import useLoadQusestionListData from '../../../hooks/useLoadQusestionListData'
-import styles from '../common.module.scss'
-import React, { useState } from 'react'
 import ListPage from '@/component/ListPage'
-import { updatedQusetionApi } from '@/api/question'
-import { useRequest } from 'ahooks'
 
+import { deleteQuestionApi, updatedQusetionApi } from '@/api/question'
+import styles from '../common.module.scss'
+const { confirm } = Modal
 const Trash = () => {
   const [selectedIds, setSelectedIds] = useState<React.Key[]>([])
 
@@ -38,9 +39,6 @@ const Trash = () => {
 
   // 问卷选中
   const onSelectChange = (selectedRowKeys: React.Key[]) => {
-    console.log(selectedRowKeys)
-    console.log(selectedIds)
-
     setSelectedIds(selectedRowKeys)
   }
 
@@ -61,8 +59,23 @@ const Trash = () => {
       manual: true,
       onSuccess: () => {
         message.success('恢复成功')
-        setSelectedIds([])
         refresh()
+        setSelectedIds([])
+      },
+    }
+  )
+
+  // 彻底删除
+  const { run: onDelete, loading: deleteLoading } = useRequest(
+    async () => {
+      await deleteQuestionApi(selectedIds as string[])
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('删除成功')
+        refresh()
+        setSelectedIds([])
       },
     }
   )
@@ -93,7 +106,21 @@ const Trash = () => {
               >
                 恢复
               </Button>
-              <Button danger disabled={selectedIds.length == 0}>
+              <Button
+                onClick={() =>
+                  confirm({
+                    title: '确定要彻底删除吗?',
+                    icon: <ExclamationCircleFilled />,
+                    content: '删除后将无法恢复',
+                    cancelText: '取消',
+                    okText: '确认',
+                    onOk: onDelete,
+                  })
+                }
+                loading={deleteLoading}
+                danger
+                disabled={selectedIds.length == 0}
+              >
                 彻底删除
               </Button>
             </Space>

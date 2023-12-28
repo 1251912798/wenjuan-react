@@ -1,11 +1,35 @@
-import { Form, Space, Input, Button } from 'antd'
-import { Link } from 'react-router-dom'
+import { Form, Space, Input, Button, message } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
 import { UserAddOutlined } from '@ant-design/icons'
+import { RegisterApi } from '@/api/user'
 import styles from './Register.module.scss'
+import { useRequest } from 'ahooks'
+
+type userType = {
+  username: string
+  password: string
+}
 
 const Register = () => {
-  const onFinish = (values: unknown) => {
-    console.log('Success:', values)
+  const navigate = useNavigate()
+
+  // 注册
+  const { run } = useRequest(
+    async values => {
+      const { username, password, nickname = username } = values
+      await RegisterApi({ username, password, nickname })
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('注册成功')
+        navigate('/login')
+      },
+    }
+  )
+
+  const onFinish = (values: userType) => {
+    run(values)
   }
 
   return (
@@ -55,7 +79,7 @@ const Register = () => {
             { required: true, message: '请确认密码!' },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value && getFieldValue('password')) {
+                if (getFieldValue('password') == value) {
                   return Promise.resolve()
                 } else {
                   return Promise.reject(new Error('两次密码不一致'))
@@ -67,7 +91,11 @@ const Register = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item validateStatus={'error'} help="sasdasd" label="昵称" name="nickname">
+        <Form.Item
+          rules={[{ type: 'string', min: 2, max: 8, message: '请输入2-8位的昵称!' }]}
+          label="昵称"
+          name="nickname"
+        >
           <Input />
         </Form.Item>
 

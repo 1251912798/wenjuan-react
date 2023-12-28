@@ -1,19 +1,23 @@
 import { UserOutlined } from '@ant-design/icons'
-import { Space, Button, Checkbox, Form, Input } from 'antd'
-import { Link } from 'react-router-dom'
-
-import { REGISTER_PATH } from '../../router/index'
-import styles from '../Register/Register.module.scss'
+import { Space, Button, Checkbox, Form, Input, message } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'antd/es/form/Form'
 import { useEffect } from 'react'
+import { LoginApi } from '@/api/user'
+import { setToken } from '@/utils/user-token'
+import { REGISTER_PATH } from '../../router/index'
+import styles from '../Register/Register.module.scss'
+import { useRequest } from 'ahooks'
 
 const Login = () => {
+  const navigate = useNavigate()
   const [form] = useForm()
 
   const removeUser = () => {
     localStorage.removeItem('username')
     localStorage.removeItem('password')
   }
+
   const setUser = (username: string, password: string) => {
     localStorage.setItem('username', username)
     localStorage.setItem('password', password)
@@ -30,6 +34,23 @@ const Login = () => {
     form.setFieldsValue({ username, password })
   }, [])
 
+  // 登录请求
+  const { run: onLogin } = useRequest(
+    async (values: { username: string; password: string }) => {
+      const { username, password } = values
+      const data = await LoginApi({ username, password })
+      return data
+    },
+    {
+      manual: true,
+      onSuccess(result) {
+        message.success('登录成功')
+        setToken(result.token)
+        navigate('/manage/list')
+      },
+    }
+  )
+
   // 校验成功后，提交表单
   const onFinish = (values: any) => {
     const { remember, username, password } = values || {}
@@ -38,6 +59,7 @@ const Login = () => {
     } else {
       removeUser()
     }
+    onLogin({ username, password })
   }
 
   return (

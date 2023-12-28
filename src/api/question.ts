@@ -26,4 +26,4 @@ export const updatedQusetionApi = (id: number | string, options: { [key: string]
 export const copyQuestionApi = (id: number | string) => http.post(`/api/qusetion/duplicate/${id}`)
 
 // 删除问卷
-export const deleteQuestionApi = (id: number | string) => http.delete(`/api/question/delete/${id}`)
+export const deleteQuestionApi = (ids: string[]) => http.delete(`/api/question`, { ids })
