@@ -7,13 +7,14 @@ import UserInfo from '../component/UserInfo/UserInfo'
 import useLoadUserInfo from '@/hooks/useLoadUserInfo'
 import styles from './MainLayout.module.scss'
 import useGetUserInfo from '@/hooks/useGetUserInfo'
+import useNavPage from '@/hooks/useNavPage'
 
 const { Header, Footer, Content } = Layout
 const MainLayout = () => {
   const { isLogin } = useLoadUserInfo()
   const { username } = useGetUserInfo() // 获取用户信息
   const [path, setPath] = useState('/')
-
+  useNavPage(isLogin)
   useEffect(() => {
     if (username) {
       setPath('/login')

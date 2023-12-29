@@ -44,6 +44,8 @@ const Login = () => {
     {
       manual: true,
       onSuccess(result) {
+        console.log(result)
+
         message.success('登录成功')
         setToken(result.token)
         navigate('/manage/list')

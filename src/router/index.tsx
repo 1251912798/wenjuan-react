@@ -12,18 +12,6 @@ import MainLayout from '../layout/MainLayout'
 import MenuLayout from '../layout/MenuLayout'
 import QuestionLayout from '../layout/QuestionLayout'
 
-Register
-List
-Home
-Login
-Edit
-Star
-Trash
-Stat
-
-MenuLayout
-QuestionLayout
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -87,3 +75,13 @@ export const HOME_PATH = '/'
 export const LOGIN_PATH = '/login'
 export const REGISTER_PATH = '/register'
 export const MANAGE_INDEX_PATH = '/manage/list'
+
+// 判断是否在登录页或者注册页
+export const isLoginResgiterPage = (path: string) => {
+  return [LOGIN_PATH, REGISTER_PATH].includes(path)
+}
+
+// 判断未登录是否在管理页
+export const isNoLoginManagePage = (path: string) => {
+  return [HOME_PATH, LOGIN_PATH, REGISTER_PATH].includes(path)
+}
