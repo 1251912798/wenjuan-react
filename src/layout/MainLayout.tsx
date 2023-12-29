@@ -11,8 +11,9 @@ import useGetUserInfo from '@/hooks/useGetUserInfo'
 const { Header, Footer, Content } = Layout
 const MainLayout = () => {
   const { isLogin } = useLoadUserInfo()
-  const { username } = useGetUserInfo()
+  const { username } = useGetUserInfo() // 获取用户信息
   const [path, setPath] = useState('/')
+
   useEffect(() => {
     if (username) {
       setPath('/login')
@@ -31,7 +32,20 @@ const MainLayout = () => {
         </div>
         <UserInfo />
       </Header>
-      <Content className={styles.content}>{!isLogin ? <Outlet /> : <Spin />}</Content>
+      <Content className={styles.content}>
+        {isLogin ? (
+          <div
+            style={{
+              textAlign: 'center',
+              marginTop: '300px',
+            }}
+          >
+            <Spin />
+          </div>
+        ) : (
+          <Outlet />
+        )}
+      </Content>
       <Footer className={styles.footer}>调查宝 &copy;2023 Created by Yinp</Footer>
     </Layout>
   )

@@ -12,16 +12,15 @@ import { loginOut } from '@/store/userSlice'
 const UserInfo = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { username, nickname } = useGetUserInfo()
 
-  // const { data } = useRequest(getUserInfoApi)
-  // const { username, nickname } = data || {}
+  // 获取用户信息
+  const { username, nickname } = useGetUserInfo()
 
   // 退出登录
   const onLoginOut = () => {
+    dispatch(loginOut())
     removeToken()
     message.success('退出登录成功')
-    dispatch(loginOut())
     navigate(LOGIN_PATH)
   }
 

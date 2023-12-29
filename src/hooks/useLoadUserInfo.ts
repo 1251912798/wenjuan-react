@@ -5,13 +5,12 @@ import { useDispatch } from 'react-redux'
 import { loginUserInfo } from '@/store/userSlice'
 import useGetUserInfo from './useGetUserInfo'
 import { getUserInfoApi } from '@/api/user'
-import { getToken } from '@/utils/user-token'
 
 const useLoadUserInfo = () => {
   const dispatch = useDispatch()
   const [isLogin, setIsLogin] = useState(true)
-  const { username } = useGetUserInfo()
 
+  // 请求用户信息
   const { run } = useRequest(getUserInfoApi, {
     manual: true,
     onSuccess(result) {
@@ -23,14 +22,16 @@ const useLoadUserInfo = () => {
     },
   })
 
+  // 判断Redux中是否已经存在用户信息
+  const { username } = useGetUserInfo()
   useEffect(() => {
+    // 存在的话，直接返回
     if (username) {
       setIsLogin(false)
       return
     }
-    if (getToken()) {
-      run()
-    }
+    // 不存在的话重新请求
+    run()
   }, [username])
   return { isLogin }
 }
