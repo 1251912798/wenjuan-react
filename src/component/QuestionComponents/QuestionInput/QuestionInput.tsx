@@ -6,6 +6,8 @@ import type { InputPropsType } from './input'
 const { Paragraph } = Typography
 const QuestionInput = (props: InputPropsType) => {
   const { title, placeholder } = { ...INPUT_DEFAULT_PROPS, ...props }
+  console.log(INPUT_DEFAULT_PROPS)
+
   return (
     <div>
       <Paragraph strong style={{ marginBottom: '5px' }}>

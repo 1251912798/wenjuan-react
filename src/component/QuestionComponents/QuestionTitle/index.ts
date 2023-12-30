@@ -9,7 +9,7 @@ export * from './title'
 
 export default {
   title: '输入框',
-  type: 'questionInput',
-  Comment: QuestionTitle,
+  type: 'questionTitle',
+  Component: QuestionTitle,
   defaultProps: TITLE_DEFAULT_PROPS,
 }

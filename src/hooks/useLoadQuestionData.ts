@@ -9,6 +9,7 @@ const useLoadQuestionData = () => {
   const dispatch = useDispatch()
   const { id = '' } = useParams()
 
+  // 获取组件列表
   const { data, run, loading, error } = useRequest(
     async (id: string) => {
       if (!id) throw new TypeError('id is required')
@@ -20,12 +21,14 @@ const useLoadQuestionData = () => {
     }
   )
 
+  // 组件列表加载完成，更新redux
   useEffect(() => {
     if (!data) return
     const { componentList = [] } = data
     dispatch(restComponent({ componentList }))
   }, [data])
 
+  // 进入编辑页面时(id就已经发生改变)，获取组件列表
   useEffect(() => {
     run(id)
   }, [id])

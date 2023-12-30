@@ -10,6 +10,6 @@ export * from './input'
 export default {
   title: '输入框',
   type: 'questionInput',
-  Comment: QuestionInput,
+  Component: QuestionInput,
   defaultProps: INPUT_DEFAULT_PROPS,
 }

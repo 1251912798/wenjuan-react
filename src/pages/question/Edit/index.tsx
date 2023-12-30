@@ -15,9 +15,8 @@ const Edit = () => {
         <div className={styles['content-wrapper__main']}>
           <div className={styles['main-left']}>组件</div>
           <div className={styles['main-center']}>
-            <div style={{ textAlign: 'center', marginTop: '200px' }}>
-              {loading ? '' : ''}
-              <EditCanvas />
+            <div className={styles.canvas_box}>
+              <EditCanvas loading={loading} />
             </div>
           </div>
           <div className={styles['main-right']}>详情</div>

@@ -14,6 +14,8 @@ const fontLevel: { [key: string]: string } = {
 
 const QuestionTitle = (props: TitlePropsType) => {
   const { title = '', level = 1, isCenter = false } = { ...TITLE_DEFAULT_PROPS, ...props }
+  console.log(TITLE_DEFAULT_PROPS)
+
   return (
     <Title
       style={{
