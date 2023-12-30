@@ -69,6 +69,8 @@ const QuestionCard = (props: PropsType) => {
     }
   )
 
+  // 跳转编辑页面
+
   if (isDeletedState) return null
   return (
     <Card hoverable bordered={false} style={{ marginBottom: '15px' }}>

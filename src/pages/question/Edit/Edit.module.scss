@@ -1,0 +1,38 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+
+  .content-wrapper {
+    flex: auto;
+    padding: 12px 0;
+    // height: 100%;
+    .content-wrapper__main {
+      margin: 0 24px;
+      display: flex;
+      height: 100%;
+      .main-left {
+        min-width: 285px;
+        background-color: #fff;
+        padding: 0 12px;
+      }
+
+      .main-center {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+
+      }
+
+      .main-right {
+        min-width: 300px;
+        background-color: #fff;
+        padding: 0 12px;
+      }
+    }
+
+  }
+}
