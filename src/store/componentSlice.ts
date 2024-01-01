@@ -1,3 +1,4 @@
+import { produce } from 'immer'
 import { createSlice } from '@reduxjs/toolkit'
 import type { CommentPropsType } from '@/component/QuestionComponents/index'
 
@@ -10,10 +11,12 @@ export type CommentInfoType = {
 }
 
 export type ComponentStateType = {
+  selectId: string
   componentList: Array<CommentInfoType>
 }
 
 const INIT_STATE: ComponentStateType = {
+  selectId: '',
   componentList: [],
 }
 
@@ -21,9 +24,15 @@ export const componentSlice = createSlice({
   name: 'components',
   initialState: INIT_STATE,
   reducers: {
-    restComponent(state: ComponentStateType, action: PayloadAction<ComponentStateType>) {
-      return action.payload
-    },
+    restComponent: produce(
+      (state: ComponentStateType, action: PayloadAction<ComponentStateType>) => {
+        state.componentList = action.payload.componentList
+      }
+    ),
+    // 当前选择id
+    onSelectId: produce((draft: ComponentStateType, action: PayloadAction<string>) => {
+      draft.selectId = action.payload
+    }),
   },
 })
 

@@ -25,7 +25,7 @@ const useLoadQuestionData = () => {
   useEffect(() => {
     if (!data) return
     const { componentList = [] } = data
-    dispatch(restComponent({ componentList }))
+    dispatch(restComponent(componentList))
   }, [data])
 
   // 进入编辑页面时(id就已经发生改变)，获取组件列表
