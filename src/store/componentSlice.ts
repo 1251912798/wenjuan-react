@@ -24,18 +24,29 @@ export const componentSlice = createSlice({
   name: 'components',
   initialState: INIT_STATE,
   reducers: {
-    restComponent: produce(
-      (state: ComponentStateType, action: PayloadAction<ComponentStateType>) => {
-        state.componentList = action.payload.componentList
-      }
-    ),
+    restComponent: (state: ComponentStateType, action: PayloadAction<ComponentStateType>) => {
+      return action.payload
+    },
+
     // 当前选择id
     onSelectId: produce((draft: ComponentStateType, action: PayloadAction<string>) => {
       draft.selectId = action.payload
     }),
+    // 添加组件
+    addComponent: produce((draft: ComponentStateType, action: PayloadAction<CommentInfoType>) => {
+      const { selectId } = draft
+      // 找当前选择的id索引
+      const index = draft.componentList.findIndex(item => item.fe_id === selectId)
+      if (index < 0) {
+        draft.componentList.push(action.payload)
+      } else {
+        draft.componentList.splice(index + 1, 0, action.payload)
+      }
+      draft.selectId = action.payload.fe_id
+    }),
   },
 })
 
-export const { restComponent } = componentSlice.actions
+export const { restComponent, onSelectId, addComponent } = componentSlice.actions
 
 export default componentSlice.reducer

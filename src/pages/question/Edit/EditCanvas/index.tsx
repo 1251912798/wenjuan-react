@@ -1,4 +1,8 @@
+import type { MouseEvent } from 'react'
 import { Spin } from 'antd'
+import { useDispatch } from 'react-redux'
+import { onSelectId } from '@/store/componentSlice'
+import classnames from 'classnames'
 import useLoadComponentList from '@/hooks/useLoadComponentList'
 import { getComponentType } from '@/component/QuestionComponents/index'
 import styles from './EditCanvas.module.scss'
@@ -15,8 +19,14 @@ const getCompnent = (item: CommentInfoType) => {
 
 const index = (props: { loading: boolean }) => {
   const { loading } = props
+  const dispatch = useDispatch()
+  const { componentList, selectId } = useLoadComponentList()
 
-  const { componentList } = useLoadComponentList()
+  // 组件选择
+  const onselectId = (event: MouseEvent, id: string) => {
+    event.stopPropagation()
+    dispatch(onSelectId(id))
+  }
 
   if (loading) {
     return (
@@ -29,8 +39,15 @@ const index = (props: { loading: boolean }) => {
   return (
     <>
       {componentList.map(item => {
+        const wrap = styles['component-box']
+        const active = styles['active-component']
+        const componentStyle = classnames({ [wrap]: true, [active]: selectId === item.fe_id })
         return (
-          <div key={item.fe_id} className={styles['component-box']}>
+          <div
+            onClick={event => onselectId(event, item.fe_id)}
+            key={item.fe_id}
+            className={componentStyle}
+          >
             <div className={styles.component}>{getCompnent(item)}</div>
           </div>
         )

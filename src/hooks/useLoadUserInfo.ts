@@ -15,7 +15,6 @@ const useLoadUserInfo = () => {
     manual: true,
     onSuccess(result) {
       const { username, nickname } = result
-      console.log(result)
       dispatch(loginUserInfo({ username, nickname }))
     },
     onFinally() {
@@ -26,8 +25,6 @@ const useLoadUserInfo = () => {
   // 判断Redux中是否已经存在用户信息
   const { username } = useGetUserInfo()
   useEffect(() => {
-    console.log(username)
-
     // 存在的话，直接返回
     if (username) {
       setIsLogin(false)

@@ -4,8 +4,9 @@ import { ComponentStateType } from '@/store/componentSlice'
 
 const useLoadComponentList = () => {
   const components = useSelector<StateType>(state => state.components) as ComponentStateType
-  const { componentList = [] } = components
-  return { componentList }
+
+  const { componentList = [], selectId = '' } = components
+  return { componentList, selectId }
 }
 
 export default useLoadComponentList

@@ -17,6 +17,20 @@ export type ComponentConfigType = {
 
 const componentConfList: ComponentConfigType[] = [QuestionInputConf, QuestionTitleConf]
 
+// 组件分组
+export const componentGroup = [
+  {
+    groupId: 'text',
+    title: '文本显示',
+    componentList: [QuestionTitleConf],
+  },
+  {
+    groupId: 'input',
+    title: '用户输入',
+    componentList: [QuestionInputConf],
+  },
+]
+
 // 根据type获取组件配置
 export const getComponentType = (type: string) => {
   return componentConfList.find(item => item.type === type)

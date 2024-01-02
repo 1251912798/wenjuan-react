@@ -25,7 +25,14 @@ const useLoadQuestionData = () => {
   useEffect(() => {
     if (!data) return
     const { componentList = [] } = data
-    dispatch(restComponent(componentList))
+
+    // 默认选中第一个组件
+    let selectId = ''
+    if (componentList.length) {
+      selectId = componentList[0].fe_id
+    }
+
+    dispatch(restComponent({ componentList, selectId }))
   }, [data])
 
   // 进入编辑页面时(id就已经发生改变)，获取组件列表

@@ -12,6 +12,9 @@
     pointer-events: none;
   }
 }
+.active-component {
+  border-color: aqua!important;
+}
 
 .loading {
   display: flex;

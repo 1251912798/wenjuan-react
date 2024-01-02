@@ -25,7 +25,6 @@ instance.interceptors.response.use(res => {
   const resData = (res.data || {}) as ResType
 
   const { code, data, msg } = resData
-  console.log(resData)
 
   if (code !== 0) {
     if (msg) {
