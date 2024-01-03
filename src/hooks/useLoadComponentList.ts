@@ -6,7 +6,10 @@ const useLoadComponentList = () => {
   const components = useSelector<StateType>(state => state.components) as ComponentStateType
 
   const { componentList = [], selectId = '' } = components
-  return { componentList, selectId }
+
+  const selectComponent = componentList.find(item => item.fe_id === selectId)
+
+  return { componentList, selectId, selectComponent }
 }
 
 export default useLoadComponentList

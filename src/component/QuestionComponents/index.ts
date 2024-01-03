@@ -12,6 +12,7 @@ export type ComponentConfigType = {
   title: string
   type: string
   Component: FC<CommentPropsType>
+  PropsComponent: FC<CommentPropsType>
   defaultProps: CommentPropsType
 }
 

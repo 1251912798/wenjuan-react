@@ -6,6 +6,7 @@ import EditCanvas from '@/pages/question/Edit/EditCanvas'
 
 import styles from './Edit.module.scss'
 import LeftPanel from './LeftPanel'
+import RightPanel from './RightPanel'
 
 const Edit = () => {
   const dispatch = useDispatch()
@@ -26,7 +27,9 @@ const Edit = () => {
               <EditCanvas loading={loading} />
             </div>
           </div>
-          <div className={styles['main-right']}>详情</div>
+          <div className={styles['main-right']}>
+            <RightPanel />
+          </div>
         </div>
       </div>
     </div>
