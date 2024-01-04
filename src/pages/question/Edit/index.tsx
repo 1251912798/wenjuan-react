@@ -1,12 +1,12 @@
-// import { Spin } from 'antd'
 import { useDispatch } from 'react-redux'
 import { onSelectId } from '@/store/componentSlice'
 import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
 import EditCanvas from '@/pages/question/Edit/EditCanvas'
-
-import styles from './Edit.module.scss'
 import LeftPanel from './LeftPanel'
 import RightPanel from './RightPanel'
+import EditHeader from './EditHeader'
+
+import styles from './Edit.module.scss'
 
 const Edit = () => {
   const dispatch = useDispatch()
@@ -16,7 +16,9 @@ const Edit = () => {
   }
   return (
     <div className={styles.content}>
-      <div className={styles['content-header']}>Header</div>
+      <div className={styles['content-header']}>
+        <EditHeader />
+      </div>
       <div className={styles['content-wrapper']}>
         <div className={styles['content-wrapper__main']}>
           <div className={styles['main-left']}>

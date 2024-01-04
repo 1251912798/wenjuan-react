@@ -2,14 +2,26 @@ import { Form, Input, Select, Checkbox } from 'antd'
 import { TitlePropsType } from './title'
 import { useEffect } from 'react'
 const PropsComponent = (props: TitlePropsType) => {
-  const { title, isCenter, level } = props
+  const { title, isCenter, level, onChange } = props
   const [form] = Form.useForm()
 
   useEffect(() => {
     form.setFieldsValue({ title, isCenter, level })
   }, [title, isCenter, level])
+
+  const onChangeProps = () => {
+    if (onChange) {
+      onChange(form.getFieldsValue())
+    }
+  }
+
   return (
-    <Form form={form} layout="vertical" initialValues={{ title, isCenter, level }}>
+    <Form
+      form={form}
+      layout="vertical"
+      onValuesChange={onChangeProps}
+      initialValues={{ title, isCenter, level }}
+    >
       <Form.Item name="title" label="标题" rules={[{ required: true, message: '请输入标题' }]}>
         <Input />
       </Form.Item>

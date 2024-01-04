@@ -1,5 +1,5 @@
 import { Tabs } from 'antd'
-import { AndroidOutlined } from '@ant-design/icons'
+import { FileTextOutlined, SettingOutlined } from '@ant-design/icons'
 import PropComponent from './PropComponent'
 
 const TabItem = [
@@ -7,13 +7,13 @@ const TabItem = [
     key: 'attribute',
     label: '属性',
     children: <PropComponent />,
-    icon: <AndroidOutlined />,
+    icon: <FileTextOutlined />,
   },
   {
     key: 'setting',
     label: '页面设置',
     children: <div>页面设置</div>,
-    icon: <AndroidOutlined />,
+    icon: <SettingOutlined />,
   },
 ]
 const RightPanel = () => {

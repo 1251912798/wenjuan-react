@@ -12,8 +12,6 @@ const ComponentLib = () => {
   const onAddComponent = (item: ComponentConfigType) => {
     const { title, type, defaultProps: props } = item
     dispatch(addComponent({ fe_id: +new Date() + '', title, type, props }))
-    //
-    console.log(item)
   }
 
   // 渲染组件列表
