@@ -1,11 +1,19 @@
 import { Space, Button, Tooltip } from 'antd'
+import { useDispatch } from 'react-redux'
+
+import { deleteComponent } from '@/store/componentSlice'
 import { DeleteOutlined } from '@ant-design/icons'
 
 const EditToolbar = () => {
+  const dispatch = useDispatch()
+  // 删除组件
+  const onDelete = () => {
+    dispatch(deleteComponent())
+  }
   return (
     <Space>
       <Tooltip title="删除">
-        <Button shape="circle" icon={<DeleteOutlined />} />
+        <Button shape="circle" onClick={onDelete} icon={<DeleteOutlined />} />
       </Tooltip>
       <Tooltip title="隐藏">
         <Button shape="circle" icon={<DeleteOutlined />} />

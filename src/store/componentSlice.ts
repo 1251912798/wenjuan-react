@@ -1,5 +1,6 @@
 import { produce } from 'immer'
 import { createSlice } from '@reduxjs/toolkit'
+import { getNextSelectId } from './utils'
 import type { CommentPropsType } from '@/component/QuestionComponents/index'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -60,10 +61,22 @@ export const componentSlice = createSlice({
         }
       }
     ),
+    // 删除组件
+    deleteComponent: produce((draft: ComponentStateType) => {
+      const { selectId, componentList = [] } = draft
+
+      const index = componentList.findIndex(item => item.fe_id === selectId)
+      const selectIndex = getNextSelectId(selectId, componentList)
+
+      if (index > -1) {
+        draft.selectId = selectIndex
+        componentList.splice(index, 1)
+      }
+    }),
   },
 })
 
-export const { restComponent, onSelectId, addComponent, updatedComponentProps } =
+export const { restComponent, onSelectId, addComponent, updatedComponentProps, deleteComponent } =
   componentSlice.actions
 
 export default componentSlice.reducer
