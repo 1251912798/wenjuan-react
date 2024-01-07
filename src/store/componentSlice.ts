@@ -8,6 +8,7 @@ export type CommentInfoType = {
   fe_id: string
   type: string
   title: string
+  isHeid?: boolean
   props: CommentPropsType
 }
 
@@ -73,10 +74,36 @@ export const componentSlice = createSlice({
         componentList.splice(index, 1)
       }
     }),
+    // 隐藏显示组件
+    hideComponent: produce(
+      (draft: ComponentStateType, action: PayloadAction<{ fe_id: string; isHeid: boolean }>) => {
+        const { componentList = [] } = draft
+        const { fe_id, isHeid } = action.payload
+
+        let selectId = ''
+        if (isHeid) {
+          selectId = getNextSelectId(fe_id, componentList)
+        } else {
+          selectId = fe_id
+        }
+        draft.selectId = selectId
+        const Component = componentList.find(item => item.fe_id === fe_id)
+
+        if (Component) {
+          Component.isHeid = isHeid
+        }
+      }
+    ),
   },
 })
 
-export const { restComponent, onSelectId, addComponent, updatedComponentProps, deleteComponent } =
-  componentSlice.actions
+export const {
+  restComponent,
+  onSelectId,
+  addComponent,
+  updatedComponentProps,
+  deleteComponent,
+  hideComponent,
+} = componentSlice.actions
 
 export default componentSlice.reducer

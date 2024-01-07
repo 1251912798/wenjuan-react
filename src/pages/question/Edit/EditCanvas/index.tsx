@@ -38,20 +38,22 @@ const index = (props: { loading: boolean }) => {
 
   return (
     <>
-      {componentList.map(item => {
-        const wrap = styles['component-box']
-        const active = styles['active-component']
-        const componentStyle = classnames({ [wrap]: true, [active]: selectId === item.fe_id })
-        return (
-          <div
-            onClick={event => onselectId(event, item.fe_id)}
-            key={item.fe_id}
-            className={componentStyle}
-          >
-            <div className={styles.component}>{getCompnent(item)}</div>
-          </div>
-        )
-      })}
+      {componentList
+        .filter(q => !q.isHeid)
+        .map(item => {
+          const wrap = styles['component-box']
+          const active = styles['active-component']
+          const componentStyle = classnames({ [wrap]: true, [active]: selectId === item.fe_id })
+          return (
+            <div
+              onClick={event => onselectId(event, item.fe_id)}
+              key={item.fe_id}
+              className={componentStyle}
+            >
+              <div className={styles.component}>{getCompnent(item)}</div>
+            </div>
+          )
+        })}
     </>
   )
 }
