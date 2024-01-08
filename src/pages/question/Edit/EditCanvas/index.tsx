@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { onSelectId } from '@/store/componentSlice'
 import classnames from 'classnames'
 import useLoadComponentList from '@/hooks/useLoadComponentList'
+import useCanvasShoortKeys from '@/hooks/useCanvasShortcutKeys'
 import { getComponentType } from '@/component/QuestionComponents/index'
 import styles from './EditCanvas.module.scss'
 import type { CommentInfoType } from '@/store/componentSlice'
@@ -26,7 +27,7 @@ const index = (props: { loading: boolean }) => {
     event.stopPropagation()
     dispatch(onSelectId(id))
   }
-
+  useCanvasShoortKeys()
   if (loading) {
     return (
       <div className={styles.loading}>

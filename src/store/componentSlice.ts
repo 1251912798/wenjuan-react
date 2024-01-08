@@ -1,6 +1,7 @@
 import { produce } from 'immer'
 import { createSlice } from '@reduxjs/toolkit'
-import { getNextSelectId } from './utils'
+import cloneDeep from 'lodash.clonedeep'
+import { getNextSelectId, insertComponent } from './utils'
 import type { CommentPropsType } from '@/component/QuestionComponents/index'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -16,11 +17,13 @@ export type CommentInfoType = {
 export type ComponentStateType = {
   selectId: string
   componentList: Array<CommentInfoType>
+  copyComponent: CommentInfoType | null
 }
 
 const INIT_STATE: ComponentStateType = {
   selectId: '',
   componentList: [],
+  copyComponent: null,
 }
 
 export const componentSlice = createSlice({
@@ -37,15 +40,7 @@ export const componentSlice = createSlice({
     }),
     // 添加组件
     addComponent: produce((draft: ComponentStateType, action: PayloadAction<CommentInfoType>) => {
-      const { selectId } = draft
-      // 找当前选择的id索引
-      const index = draft.componentList.findIndex(item => item.fe_id === selectId)
-      if (index < 0) {
-        draft.componentList.push(action.payload)
-      } else {
-        draft.componentList.splice(index + 1, 0, action.payload)
-      }
-      draft.selectId = action.payload.fe_id
+      insertComponent(draft, action.payload)
     }),
     // 更新组件props
     updatedComponentProps: produce(
@@ -108,6 +103,24 @@ export const componentSlice = createSlice({
         }
       }
     ),
+    // 复制组件
+    copySelectComponent: produce((draft: ComponentStateType) => {
+      const { selectId, componentList = [] } = draft
+
+      const Component = componentList.find(item => item.fe_id === selectId)
+
+      if (Component) {
+        draft.copyComponent = cloneDeep(Component)
+      }
+    }),
+    // 粘贴组件
+    pasteComponent: produce((draft: ComponentStateType) => {
+      const { copyComponent } = draft
+      if (copyComponent) {
+        copyComponent.fe_id = +new Date() + ''
+        insertComponent(draft, copyComponent)
+      }
+    }),
   },
 })
 
@@ -119,6 +132,8 @@ export const {
   deleteComponent,
   hideComponent,
   lockComponent,
+  copySelectComponent,
+  pasteComponent,
 } = componentSlice.actions
 
 export default componentSlice.reducer

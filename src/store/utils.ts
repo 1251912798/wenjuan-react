@@ -1,4 +1,4 @@
-import { CommentInfoType } from './componentSlice'
+import type { CommentInfoType, ComponentStateType } from './componentSlice'
 
 export const getNextSelectId = (fe_id: string, componentList: CommentInfoType[]) => {
   const isHeidList = componentList.filter(item => !item.isHeid)
@@ -21,4 +21,17 @@ export const getNextSelectId = (fe_id: string, componentList: CommentInfoType[])
     }
   }
   return newSelectId
+}
+
+// 插入组件
+export const insertComponent = (draft: ComponentStateType, newComponent: CommentInfoType) => {
+  const { selectId, componentList } = draft
+  // 找当前选择的id索引
+  const index = componentList.findIndex(item => item.fe_id === selectId)
+  if (index < 0) {
+    draft.componentList.push(newComponent)
+  } else {
+    draft.componentList.splice(index + 1, 0, newComponent)
+  }
+  draft.selectId = newComponent.fe_id
 }
