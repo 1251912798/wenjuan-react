@@ -4,6 +4,7 @@ export type TitlePropsType = {
   isCenter?: boolean
   // eslint-disable-next-line no-unused-vars
   onChange?: (newProps: TitlePropsType) => void
+  disabled?: boolean
 }
 
 export const TITLE_DEFAULT_PROPS: TitlePropsType = {

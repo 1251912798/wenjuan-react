@@ -12,7 +12,7 @@ const PropComponent = () => {
   const { selectComponent } = useLoadComponentList()
   if (!selectComponent) return <NoProp />
 
-  const { type, props } = selectComponent
+  const { type, props, isLock } = selectComponent
   const ComponentConf = getComponentType(type)
   if (!ComponentConf) return <NoProp />
 
@@ -24,7 +24,7 @@ const PropComponent = () => {
     dispatch(updatedComponentProps({ fe_id, newProps }))
   }
 
-  return <PropsComponent {...props} onChange={onChangeProps}></PropsComponent>
+  return <PropsComponent {...props} onChange={onChangeProps} disabled={isLock} />
 }
 
 export default PropComponent

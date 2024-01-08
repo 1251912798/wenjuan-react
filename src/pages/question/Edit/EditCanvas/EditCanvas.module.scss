@@ -16,6 +16,11 @@
   border-color: aqua!important;
 }
 
+.isLocking {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
 .loading {
   display: flex;
   justify-content: center;

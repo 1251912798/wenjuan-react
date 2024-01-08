@@ -9,6 +9,7 @@ export type CommentInfoType = {
   type: string
   title: string
   isHeid?: boolean
+  isLock: boolean
   props: CommentPropsType
 }
 
@@ -94,6 +95,19 @@ export const componentSlice = createSlice({
         }
       }
     ),
+    // 锁定解锁组件
+    lockComponent: produce(
+      (draft: ComponentStateType, action: PayloadAction<{ fe_id: string }>) => {
+        const { componentList = [] } = draft
+        const { fe_id } = action.payload
+
+        const Component = componentList.find(item => item.fe_id === fe_id)
+
+        if (Component) {
+          Component.isLock = !Component.isLock
+        }
+      }
+    ),
   },
 })
 
@@ -104,6 +118,7 @@ export const {
   updatedComponentProps,
   deleteComponent,
   hideComponent,
+  lockComponent,
 } = componentSlice.actions
 
 export default componentSlice.reducer

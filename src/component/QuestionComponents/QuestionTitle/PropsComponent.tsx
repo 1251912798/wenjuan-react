@@ -2,7 +2,7 @@ import { Form, Input, Select, Checkbox } from 'antd'
 import { TitlePropsType } from './title'
 import { useEffect } from 'react'
 const PropsComponent = (props: TitlePropsType) => {
-  const { title, isCenter, level, onChange } = props
+  const { title, isCenter, level, onChange, disabled } = props
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -19,6 +19,7 @@ const PropsComponent = (props: TitlePropsType) => {
     <Form
       form={form}
       layout="vertical"
+      disabled={disabled}
       onValuesChange={onChangeProps}
       initialValues={{ title, isCenter, level }}
     >

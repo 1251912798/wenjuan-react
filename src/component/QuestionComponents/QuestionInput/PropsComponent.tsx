@@ -3,7 +3,7 @@ import { InputPropsType } from './input'
 import { useEffect } from 'react'
 
 const PropsComponent = (props: InputPropsType) => {
-  const { title, placeholder, onChange } = props
+  const { title, placeholder, onChange, disabled } = props
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -22,6 +22,7 @@ const PropsComponent = (props: InputPropsType) => {
       <Form
         form={form}
         onValuesChange={onChangeProps}
+        disabled={disabled}
         layout="vertical"
         initialValues={{ title, placeholder }}
       >

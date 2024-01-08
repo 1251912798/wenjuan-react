@@ -21,7 +21,6 @@ const index = (props: { loading: boolean }) => {
   const { loading } = props
   const dispatch = useDispatch()
   const { componentList, selectId } = useLoadComponentList()
-
   // 组件选择
   const onselectId = (event: MouseEvent, id: string) => {
     event.stopPropagation()
@@ -43,7 +42,12 @@ const index = (props: { loading: boolean }) => {
         .map(item => {
           const wrap = styles['component-box']
           const active = styles['active-component']
-          const componentStyle = classnames({ [wrap]: true, [active]: selectId === item.fe_id })
+          const isLocks = styles['isLocking']
+          const componentStyle = classnames({
+            [wrap]: true,
+            [active]: selectId === item.fe_id,
+            [isLocks]: item.isLock,
+          })
           return (
             <div
               onClick={event => onselectId(event, item.fe_id)}
