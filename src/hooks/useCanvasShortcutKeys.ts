@@ -1,7 +1,12 @@
 import { useDispatch } from 'react-redux'
 import { useKeyPress } from 'ahooks'
 
-import { copySelectComponent, pasteComponent, deleteComponent } from '@/store/componentSlice'
+import {
+  copySelectComponent,
+  pasteComponent,
+  deleteComponent,
+  moveKeyComponent,
+} from '@/store/componentSlice'
 
 const useCanvasShoortKeys = () => {
   const dispatch = useDispatch()
@@ -13,19 +18,32 @@ const useCanvasShoortKeys = () => {
     return activeEle === document.body
   }
 
+  // 删除组件
   useKeyPress(['backspace', 'delete'], () => {
     if (!isInputActive()) return
     dispatch(deleteComponent())
   })
 
+  // 复制组件
   useKeyPress('ctrl.c', () => {
     if (!isInputActive()) return
     dispatch(copySelectComponent())
   })
 
+  // 粘贴组件
   useKeyPress('ctrl.v', () => {
     if (!isInputActive()) return
     dispatch(pasteComponent())
+  })
+
+  // 上移下移组件
+  useKeyPress('uparrow', () => {
+    if (!isInputActive()) return
+    dispatch(moveKeyComponent('up'))
+  })
+  useKeyPress('downarrow', () => {
+    if (!isInputActive()) return
+    dispatch(moveKeyComponent('down'))
   })
 }
 

@@ -121,6 +121,23 @@ export const componentSlice = createSlice({
         insertComponent(draft, copyComponent)
       }
     }),
+    // 方向键 移动按钮
+    moveKeyComponent: produce((draft: ComponentStateType, action: PayloadAction<string>) => {
+      const { componentList = [], selectId } = draft
+      const index = componentList.findIndex(item => item.fe_id === selectId)
+      const key = action.payload
+
+      if (key === 'up') {
+        // 向上移动
+        if (index <= 0) return
+        draft.selectId = componentList[index - 1].fe_id
+      } else if (key === 'down') {
+        // 向下移动
+        if (index < 0) return
+        if (index === componentList.length - 1) return
+        draft.selectId = componentList[index + 1].fe_id
+      }
+    }),
   },
 })
 
@@ -134,6 +151,7 @@ export const {
   lockComponent,
   copySelectComponent,
   pasteComponent,
+  moveKeyComponent,
 } = componentSlice.actions
 
 export default componentSlice.reducer
