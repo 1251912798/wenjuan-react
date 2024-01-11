@@ -18,10 +18,15 @@ const ComponentLib = () => {
 
   // 渲染组件列表
   const renderComponent = (item: ComponentConfigType[]) => {
-    return item.map(item => {
+    return item.map((item, index) => {
       const { defaultProps, Component } = item
       return (
-        <div className={styles.context} onClick={() => onAddComponent(item)} key={item.type}>
+        <div
+          className={styles.context}
+          style={{ marginTop: index === 0 ? '' : '10px' }}
+          onClick={() => onAddComponent(item)}
+          key={item.type}
+        >
           <div className={styles.component}>
             <Component {...defaultProps} />
           </div>

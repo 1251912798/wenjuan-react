@@ -1,6 +1,7 @@
-import { Form, Input, Select, Checkbox } from 'antd'
-import { TitlePropsType } from './title'
 import { useEffect } from 'react'
+import { Form, Input, Select, Checkbox } from 'antd'
+
+import type { TitlePropsType } from './title'
 const PropsComponent = (props: TitlePropsType) => {
   const { title, isCenter, level, onChange, disabled } = props
   const [form] = Form.useForm()
@@ -35,8 +36,8 @@ const PropsComponent = (props: TitlePropsType) => {
           ]}
         />
       </Form.Item>
-      <Form.Item name="isCenter" valuePropName="checked" label="是否居中">
-        <Checkbox />
+      <Form.Item name="isCenter" valuePropName="checked">
+        <Checkbox>居中显示</Checkbox>
       </Form.Item>
     </Form>
   )

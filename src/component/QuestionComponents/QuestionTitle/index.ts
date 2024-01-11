@@ -1,5 +1,5 @@
 /**
- *  @description 输入组件
+ *  @description 标题组件
  *  @author yinp
  */
 import PropsComponent from './PropsComponent'
