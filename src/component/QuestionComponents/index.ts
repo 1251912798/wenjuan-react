@@ -2,13 +2,15 @@ import { FC } from 'react'
 import QuestionInputConf from './QuestionInput/index'
 import QuestionTitleConf from './QuestionTitle/index'
 import QuestionParagraphConf from './QuestionParagraph'
+import QuestionInfoConf from './QuestionInfo'
 
 import type { InputPropsType } from './QuestionInput/index'
 import type { TitlePropsType } from './QuestionTitle/index'
 import type { ParagraphPropsType } from './QuestionParagraph'
+import type { InfoPropsType } from './QuestionInfo'
 
 // 各组件的props类型
-export type CommentPropsType = InputPropsType | TitlePropsType | ParagraphPropsType
+export type CommentPropsType = InputPropsType | TitlePropsType | ParagraphPropsType | InfoPropsType
 
 export type ComponentConfigType = {
   title: string
@@ -19,6 +21,7 @@ export type ComponentConfigType = {
 }
 
 const componentConfList: ComponentConfigType[] = [
+  QuestionInfoConf,
   QuestionInputConf,
   QuestionTitleConf,
   QuestionParagraphConf,
@@ -29,7 +32,7 @@ export const componentGroup = [
   {
     groupId: 'text',
     title: '文本显示',
-    componentList: [QuestionTitleConf, QuestionParagraphConf],
+    componentList: [QuestionInfoConf, QuestionTitleConf, QuestionParagraphConf],
   },
   {
     groupId: 'input',
