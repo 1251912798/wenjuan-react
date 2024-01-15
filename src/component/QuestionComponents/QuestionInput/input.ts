@@ -7,6 +7,6 @@ export type InputPropsType = {
 }
 
 export const INPUT_DEFAULT_PROPS: InputPropsType = {
-  title: '输入框标题',
+  title: '输入框',
   placeholder: '请输入...',
 }

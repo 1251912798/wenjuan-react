@@ -3,14 +3,21 @@ import QuestionInputConf from './QuestionInput/index'
 import QuestionTitleConf from './QuestionTitle/index'
 import QuestionParagraphConf from './QuestionParagraph'
 import QuestionInfoConf from './QuestionInfo'
+import QuestionTextareaConf from './QuestionTextarea'
 
 import type { InputPropsType } from './QuestionInput/index'
 import type { TitlePropsType } from './QuestionTitle/index'
 import type { ParagraphPropsType } from './QuestionParagraph'
 import type { InfoPropsType } from './QuestionInfo'
+import type { TextareaPropsType } from './QuestionTextarea'
 
 // 各组件的props类型
-export type CommentPropsType = InputPropsType | TitlePropsType | ParagraphPropsType | InfoPropsType
+export type CommentPropsType =
+  | InputPropsType
+  | TitlePropsType
+  | ParagraphPropsType
+  | InfoPropsType
+  | TextareaPropsType
 
 export type ComponentConfigType = {
   title: string
@@ -25,6 +32,7 @@ const componentConfList: ComponentConfigType[] = [
   QuestionInputConf,
   QuestionTitleConf,
   QuestionParagraphConf,
+  QuestionTextareaConf,
 ]
 
 // 组件分组
@@ -37,7 +45,7 @@ export const componentGroup = [
   {
     groupId: 'input',
     title: '用户输入',
-    componentList: [QuestionInputConf],
+    componentList: [QuestionInputConf, QuestionTextareaConf],
   },
 ]
 

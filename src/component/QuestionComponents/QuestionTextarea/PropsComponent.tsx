@@ -1,9 +1,8 @@
+import { Form, Input } from 'antd'
 import { useEffect } from 'react'
 
-import { Form, Input } from 'antd'
-import type { InputPropsType } from './input'
-
-const PropsComponent = (props: InputPropsType) => {
+import type { TextareaPropsType } from './textarea'
+const PropsComponent = (props: TextareaPropsType) => {
   const { title, placeholder, onChange, disabled } = props
   const [form] = Form.useForm()
 
@@ -11,26 +10,24 @@ const PropsComponent = (props: InputPropsType) => {
     form.setFieldsValue({ title, placeholder })
   }, [title, placeholder])
 
-  // 监听表单值变化
   const onChangeProps = () => {
     if (onChange) {
       onChange(form.getFieldsValue())
     }
   }
-
   return (
     <>
       <Form
         form={form}
-        onValuesChange={onChangeProps}
-        disabled={disabled}
         layout="vertical"
         initialValues={{ title, placeholder }}
+        disabled={disabled}
+        onValuesChange={onChangeProps}
       >
-        <Form.Item name="title" label="标题" rules={[{ required: true, message: '请输入标题' }]}>
+        <Form.Item label="标题" name="title" rules={[{ required: true, message: '请输入标题' }]}>
           <Input />
         </Form.Item>
-        <Form.Item name="placeholder" label="Placeholder">
+        <Form.Item label="Placeholder" name="placeholder">
           <Input />
         </Form.Item>
       </Form>
