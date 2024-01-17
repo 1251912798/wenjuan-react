@@ -1,13 +1,21 @@
 import { Form, Input, Checkbox, Select, Space, Button } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import type { RadioPropsType } from './radio'
-import { useEffect } from 'react'
+import type { RadioPropsType, optionsType } from './radio'
+import { useEffect, useId } from 'react'
 const PropsComponent = (props: RadioPropsType) => {
   const { title, options = [], isColumn, defaultValue, onChange, disabled } = props
+  const randomId = useId()
   const [form] = Form.useForm()
 
   const onChangeProps = () => {
     if (onChange) {
+      const newForm = form.getFieldsValue()
+      const { options = [] } = newForm
+      options.forEach((item: optionsType) => {
+        if (item.value) return
+        item.value = randomId
+      })
+
       onChange(form.getFieldsValue())
     }
   }
@@ -32,22 +40,44 @@ const PropsComponent = (props: RadioPropsType) => {
             {(fields, { add, remove }) => {
               return (
                 <>
-                  {fields.map(({ name, key }, index) => (
-                    <Space key={key} align="baseline">
-                      <Form.Item
-                        name={[name, 'label']}
-                        rules={[{ required: true, message: '请输入选项名称...' }]}
-                      >
-                        <Input placeholder="输入选项文字..." />
-                      </Form.Item>
+                  <Space direction="vertical">
+                    {fields.map(({ name, key }) => (
+                      <Space key={key} align="baseline">
+                        <Form.Item
+                          name={[name, 'label']}
+                          rules={[
+                            { required: true, message: '请输入选项名称...' },
+                            {
+                              validator: (_, label) => {
+                                const { options = [] } = form.getFieldsValue()
+                                let num = 0
+                                options.forEach((item: optionsType) => {
+                                  if (item.label === label) num++
+                                })
+                                if (num === 1) return Promise.resolve()
+                                return Promise.reject(new Error('选项名称不能重复'))
+                              },
+                            },
+                          ]}
+                        >
+                          <Input placeholder="输入选项文字..." />
+                        </Form.Item>
 
-                      {index > 1 && <MinusCircleOutlined onClick={() => remove(name)} />}
-                    </Space>
-                  ))}
+                        {fields.length > 2 && <MinusCircleOutlined onClick={() => remove(name)} />}
+                      </Space>
+                    ))}
+                  </Space>
 
-                  <Button type="link" icon={<PlusOutlined />} block onClick={() => add()}>
-                    添加选项
-                  </Button>
+                  <Form.Item>
+                    <Button
+                      type="link"
+                      icon={<PlusOutlined />}
+                      block
+                      onClick={() => add({ label: '', value: '' })}
+                    >
+                      添加选项
+                    </Button>
+                  </Form.Item>
                 </>
               )
             }}

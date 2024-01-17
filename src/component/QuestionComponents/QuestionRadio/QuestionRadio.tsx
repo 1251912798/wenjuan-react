@@ -2,20 +2,21 @@ import { Radio, Typography, Space } from 'antd'
 
 import { RADIO_DEFAULT_PROPS } from './radio'
 import type { RadioPropsType } from './radio'
+
 const { Paragraph } = Typography
+
 const QuestionRadio = (props: RadioPropsType) => {
   const { title, options = [], isColumn, defaultValue } = { ...RADIO_DEFAULT_PROPS, ...props }
   return (
     <>
-      <div>
-        <Paragraph strong>{title}</Paragraph>
-      </div>
+      <Paragraph strong>{title}</Paragraph>
       <Radio.Group value={defaultValue}>
-        <Space direction={isColumn ? 'vertical' : 'horizontal'}>
+        <Space direction={isColumn ? 'vertical' : 'horizontal'} wrap>
           {options.map(item => {
+            const { value, label } = item
             return (
-              <Radio key={item.value} value={item.value}>
-                {item.label}
+              <Radio key={value} value={value}>
+                {label}
               </Radio>
             )
           })}
