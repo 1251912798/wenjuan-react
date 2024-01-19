@@ -53,6 +53,9 @@ dependencies:
   lodash.clonedeep:
     specifier: ^4.5.0
     version: registry.npmmirror.com/lodash.clonedeep@4.5.0
+  nanoid:
+    specifier: ^5.0.4
+    version: registry.npmmirror.com/nanoid@5.0.4
   react:
     specifier: ^18.2.0
     version: registry.npmmirror.com/react@18.2.0
@@ -9838,6 +9841,14 @@ packages:
     version: 3.3.7
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  registry.npmmirror.com/nanoid@5.0.4:
+    resolution: {integrity: sha512-vAjmBf13gsmhXSgBrtIclinISzFFy22WwCYoyilZlsrRXNIHSwgFQ1bEdjRwMT3aoadeIF6HMuDRlOxzfXV8ig==, tarball: https://registry.npmmirror.com/nanoid/-/nanoid-5.0.4.tgz}
+    name: nanoid
+    version: 5.0.4
+    engines: {node: ^18 || >=20}
+    hasBin: true
+    dev: false
 
   registry.npmmirror.com/natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==, tarball: https://registry.npmmirror.com/natural-compare-lite/-/natural-compare-lite-1.4.0.tgz}

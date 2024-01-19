@@ -1,58 +1,68 @@
-import { Form, Input, Checkbox, Select, Space, Button } from 'antd'
-import { useEffect } from 'react'
-import { nanoid } from 'nanoid'
+import { Form, Input, Checkbox, Space, Button } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import type { RadioPropsType, optionsType } from './radio'
+import { nanoid } from 'nanoid'
 
-const PropsComponent = (props: RadioPropsType) => {
-  const { title, options = [], isColumn, value, onChange, disabled } = props
+import type { CheckboxPropsType, optionsType } from './checkbox'
+import { useEffect } from 'react'
+
+const PropsComponent = (props: CheckboxPropsType) => {
+  const { title, isColumn, list = [], disabled } = props
+  const { onChange } = props
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    form.setFieldsValue({ title, isColumn, list })
+  }, [title, isColumn, list])
 
   const onChangeProps = () => {
     if (onChange) {
-      const newForm = form.getFieldsValue()
-      const { options = [] } = newForm
-      options.forEach((item: optionsType) => {
+      const newForm = form.getFieldsValue() as CheckboxPropsType
+
+      if (newForm.list) {
+        newForm.list = newForm.list.filter(item => !(item.label == null))
+      }
+      const { list = [] } = newForm
+      list.forEach((item: optionsType) => {
         if (item.value) return
         item.value = nanoid(5)
       })
-
-      onChange(form.getFieldsValue())
+      onChange(newForm)
     }
   }
 
-  useEffect(() => {
-    form.setFieldsValue({ title, isColumn, value, options })
-  }, [title, isColumn, value, options])
   return (
     <>
       <Form
-        form={form}
-        initialValues={{ title, isColumn, value, options }}
-        onValuesChange={onChangeProps}
-        disabled={disabled}
         layout="vertical"
+        form={form}
+        disabled={disabled}
+        onValuesChange={onChangeProps}
+        initialValues={{ title, isColumn, list }}
       >
-        <Form.Item label="标题" name="title">
+        <Form.Item name="title" label="标题" rules={[{ required: true, message: '请输入标题' }]}>
           <Input />
         </Form.Item>
         <Form.Item label="选项">
-          <Form.List name="options">
+          <Form.List name="list">
             {(fields, { add, remove }) => {
               return (
                 <>
                   <Space direction="vertical">
                     {fields.map(({ name, key }) => (
                       <Space key={key} align="baseline">
+                        <Form.Item name={[name, 'checked']} valuePropName="checked">
+                          <Checkbox />
+                        </Form.Item>
+
                         <Form.Item
                           name={[name, 'label']}
                           rules={[
-                            { required: true, message: '请输入选项名称...' },
+                            { required: true, message: '请输入选项文字' },
                             {
                               validator: (_, label) => {
-                                const { options = [] } = form.getFieldsValue()
+                                const { list = [] } = form.getFieldsValue()
                                 let num = 0
-                                options.forEach((item: optionsType) => {
+                                list.forEach((item: optionsType) => {
                                   if (item.label === label) num++
                                 })
                                 if (num === 1) return Promise.resolve()
@@ -61,20 +71,18 @@ const PropsComponent = (props: RadioPropsType) => {
                             },
                           ]}
                         >
-                          <Input placeholder="输入选项文字..." />
+                          <Input placeholder="请输入选项文字" />
                         </Form.Item>
-
                         {fields.length > 2 && <MinusCircleOutlined onClick={() => remove(name)} />}
                       </Space>
                     ))}
                   </Space>
-
                   <Form.Item>
                     <Button
                       type="link"
                       icon={<PlusOutlined />}
                       block
-                      onClick={() => add({ label: '', value: '' })}
+                      onClick={() => add({ label: '', value: '', Checkbox: false })}
                     >
                       添加选项
                     </Button>
@@ -83,9 +91,6 @@ const PropsComponent = (props: RadioPropsType) => {
               )
             }}
           </Form.List>
-        </Form.Item>
-        <Form.Item label="默认选中" name="defaultValue">
-          <Select options={options} value={value} />
         </Form.Item>
         <Form.Item name="isColumn" valuePropName="checked">
           <Checkbox>竖向排列</Checkbox>

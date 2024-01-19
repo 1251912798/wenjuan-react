@@ -6,11 +6,11 @@ import type { RadioPropsType } from './radio'
 const { Paragraph } = Typography
 
 const QuestionRadio = (props: RadioPropsType) => {
-  const { title, options = [], isColumn, defaultValue } = { ...RADIO_DEFAULT_PROPS, ...props }
+  const { title, options = [], isColumn, value } = { ...RADIO_DEFAULT_PROPS, ...props }
   return (
     <>
       <Paragraph strong>{title}</Paragraph>
-      <Radio.Group value={defaultValue}>
+      <Radio.Group value={value}>
         <Space direction={isColumn ? 'vertical' : 'horizontal'} wrap>
           {options.map(item => {
             const { value, label } = item

@@ -19,6 +19,7 @@
     "immer": "^10.0.3",
     "less": "^4.2.0",
     "lodash.clonedeep": "^4.5.0",
+    "nanoid": "^5.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.4",
