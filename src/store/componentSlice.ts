@@ -138,6 +138,15 @@ export const componentSlice = createSlice({
         draft.selectId = componentList[index + 1].fe_id
       }
     }),
+    // 修改组件title
+    updateComponentTitle: produce((draft: ComponentStateType, action: PayloadAction<string>) => {
+      const { componentList = [], selectId } = draft
+      const Component = componentList.find(item => item.fe_id === selectId)
+
+      if (Component) {
+        Component.title = action.payload
+      }
+    }),
   },
 })
 
@@ -152,6 +161,7 @@ export const {
   copySelectComponent,
   pasteComponent,
   moveKeyComponent,
+  updateComponentTitle,
 } = componentSlice.actions
 
 export default componentSlice.reducer

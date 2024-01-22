@@ -16,7 +16,6 @@ const PropsComponent = (props: RadioPropsType) => {
         if (item.value) return
         item.value = nanoid(5)
       })
-
       onChange(form.getFieldsValue())
     }
   }
@@ -84,7 +83,7 @@ const PropsComponent = (props: RadioPropsType) => {
             }}
           </Form.List>
         </Form.Item>
-        <Form.Item label="默认选中" name="defaultValue">
+        <Form.Item label="默认选中" name="value">
           <Select options={options} value={value} />
         </Form.Item>
         <Form.Item name="isColumn" valuePropName="checked">
