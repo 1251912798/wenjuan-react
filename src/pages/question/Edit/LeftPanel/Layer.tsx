@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 
-import { updateComponentTitle } from '@/store/componentSlice'
+import { updateComponentTitle, lockComponent, hideComponent } from '@/store/componentSlice'
 import useLoadComponentList from '@/hooks/useLoadComponentList'
 import { onSelectId } from '@/store/componentSlice'
 
 import styles from './Layer.module.scss'
-import type { ChangeEvent } from 'react'
+import type { ChangeEvent, MouseEvent } from 'react'
 
 const Layer = () => {
   const { componentList = [], selectId } = useLoadComponentList()
@@ -37,6 +37,21 @@ const Layer = () => {
     if (value === undefined) return
     dispatch(updateComponentTitle(value))
   }
+
+  // 锁定组件
+  const onLockComponent = (id: string, event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation()
+    if (!id) return
+    dispatch(lockComponent({ fe_id: id }))
+  }
+
+  // 隐藏组件
+  const onHeidComponent = (id: string, isHeid: boolean, event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation()
+    if (!id) return
+    dispatch(hideComponent({ fe_id: id, isHeid: isHeid }))
+  }
+
   return (
     <>
       {componentList.map(item => {
@@ -63,12 +78,16 @@ const Layer = () => {
                 <Button
                   icon={<EyeInvisibleOutlined />}
                   shape="circle"
+                  className={isHeid ? '' : styles.btn}
                   type={isHeid ? 'primary' : 'text'}
+                  onClick={event => onHeidComponent(fe_id, !isHeid as boolean, event)}
                 ></Button>
                 <Button
                   icon={<LockOutlined />}
                   shape="circle"
+                  className={isLock ? '' : styles.btn}
                   type={isLock ? 'primary' : 'text'}
+                  onClick={event => onLockComponent(fe_id, event)}
                 ></Button>
               </Space>
             </div>

@@ -1,4 +1,4 @@
-.wrap{
+.wrap {
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
@@ -6,8 +6,26 @@
   font-weight: 600;
   border-bottom: 1px solid #eee;
   cursor: pointer;
+
   .active {
     color: #1677ff;
+  }
+
+  .hendler {
+
+    .btn {
+      opacity: .2;
+    }
+
+  }
+
+  &:hover {
+    .hendler {
+
+      .btn {
+        opacity: 1;
+      }
+    }
   }
 
 }
