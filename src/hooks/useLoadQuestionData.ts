@@ -4,7 +4,9 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { restComponent } from '@/store/componentSlice'
+import { restPageInfo } from '@/store/pageInfoSlice'
 import { getQuestionDetailApi } from '../api/question'
+
 const useLoadQuestionData = () => {
   const dispatch = useDispatch()
   const { id = '' } = useParams()
@@ -24,7 +26,7 @@ const useLoadQuestionData = () => {
   // 组件列表加载完成，更新redux
   useEffect(() => {
     if (!data) return
-    const { componentList = [] } = data
+    const { componentList = [], title = '', desc = '', js = '', css = '' } = data
 
     // 默认选中第一个组件
     let selectId = ''
@@ -33,6 +35,7 @@ const useLoadQuestionData = () => {
     }
 
     dispatch(restComponent({ componentList, selectId, copyComponent: null }))
+    dispatch(restPageInfo({ title, desc, js, css }))
   }, [data])
 
   // 进入编辑页面时(id就已经发生改变)，获取组件列表
