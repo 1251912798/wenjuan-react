@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, Space, Typography, Input } from 'antd'
 import { useDispatch } from 'react-redux'
-import { LeftOutlined, CheckOutlined, EditOutlined } from '@ant-design/icons'
+import { LeftOutlined, CheckOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import EditToolbar from './EditToolbar'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
@@ -10,6 +10,10 @@ import { updatedPageTitle } from '@/store/pageInfoSlice'
 import styles from './EditHeader.module.scss'
 
 import type { ChangeEvent } from 'react'
+import { useParams } from 'react-router-dom'
+import useLoadComponentList from '@/hooks/useLoadComponentList'
+import { useDebounceEffect, useKeyPress, useRequest } from 'ahooks'
+import { updatedQusetionApi } from '@/api/question'
 
 const { Title } = Typography
 
@@ -46,6 +50,43 @@ const TitleComponent = () => {
   )
 }
 
+const PreserveQuestion = () => {
+  const { id } = useParams()
+  const pageInfo = useGetPageInfo()
+  const { componentList = [] } = useLoadComponentList()
+
+  const { loading, run: save } = useRequest(
+    async () => {
+      if (!id) return
+      await updatedQusetionApi(id, { ...pageInfo, componentList })
+    },
+    { manual: true }
+  )
+
+  useKeyPress('ctrl.s', (event: KeyboardEvent) => {
+    event.preventDefault()
+    if (!loading) save()
+  })
+
+  useDebounceEffect(
+    () => {
+      save()
+    },
+    [componentList, pageInfo],
+    { wait: 1000 }
+  )
+
+  return (
+    <Button
+      icon={loading ? <LoadingOutlined /> : <CheckOutlined />}
+      disabled={loading}
+      onClick={save}
+    >
+      保存
+    </Button>
+  )
+}
+
 // 编辑头部
 const EditHeader = () => {
   return (
@@ -64,7 +105,7 @@ const EditHeader = () => {
         </div>
         <div className={styles.right}>
           <Space>
-            <Button icon={<CheckOutlined />}>保存</Button>
+            <PreserveQuestion />
             <Button type="primary">发布</Button>
           </Space>
         </div>
