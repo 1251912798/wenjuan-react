@@ -1,14 +1,18 @@
 import type { MouseEvent } from 'react'
 import { Spin } from 'antd'
 import { useDispatch } from 'react-redux'
-import { onSelectId } from '@/store/componentSlice'
 import classnames from 'classnames'
+
+import SortContaniner from '@/component/DragSort/SortContaniner'
+import SortItem from '@/component/DragSort/SortItem'
+import { onSelectId, dragSorter } from '@/store/componentSlice'
 import useLoadComponentList from '@/hooks/useLoadComponentList'
 import useCanvasShoortKeys from '@/hooks/useCanvasShortcutKeys'
 import { getComponentType } from '@/component/QuestionComponents/index'
-import styles from './EditCanvas.module.scss'
-import type { CommentInfoType } from '@/store/componentSlice'
 
+import styles from './EditCanvas.module.scss'
+
+import type { CommentInfoType } from '@/store/componentSlice'
 // 获取type对应的组件
 const getCompnent = (item: CommentInfoType) => {
   const { type, props } = item
@@ -21,7 +25,7 @@ const getCompnent = (item: CommentInfoType) => {
 const index = (props: { loading: boolean }) => {
   const { loading } = props
   const dispatch = useDispatch()
-  const { componentList, selectId } = useLoadComponentList()
+  const { componentList = [], selectId } = useLoadComponentList()
   // 组件选择
   const onselectId = (event: MouseEvent, id: string) => {
     event.stopPropagation()
@@ -36,11 +40,22 @@ const index = (props: { loading: boolean }) => {
     )
   }
 
+  // 组件列表添加id
+  const componentListMap = componentList.map(item => {
+    return { ...item, id: item.fe_id }
+  })
+
+  // 拖拽结束
+  const onDragEnd = (oldIndex: number, newIndex: number) => {
+    dispatch(dragSorter({ oldIndex, newIndex }))
+  }
+
   return (
-    <>
+    <SortContaniner items={componentListMap} onDragEnd={onDragEnd}>
       {componentList
         .filter(q => !q.isHeid)
         .map(item => {
+          const { fe_id } = item
           const wrap = styles['component-box']
           const active = styles['active-component']
           const isLocks = styles['isLocking']
@@ -50,16 +65,14 @@ const index = (props: { loading: boolean }) => {
             [isLocks]: item.isLock,
           })
           return (
-            <div
-              onClick={event => onselectId(event, item.fe_id)}
-              key={item.fe_id}
-              className={componentStyle}
-            >
-              <div className={styles.component}>{getCompnent(item)}</div>
-            </div>
+            <SortItem key={fe_id} id={fe_id}>
+              <div onClick={event => onselectId(event, fe_id)} className={componentStyle}>
+                <div className={styles.component}>{getCompnent(item)}</div>
+              </div>
+            </SortItem>
           )
         })}
-    </>
+    </SortContaniner>
   )
 }
 

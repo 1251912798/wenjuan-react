@@ -39,6 +39,7 @@ const SortContaniner = (props: PropsTyps) => {
       onDragEnd(oldIndex, newIndex)
     }
   }
+
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={items} strategy={verticalListSortingStrategy}>

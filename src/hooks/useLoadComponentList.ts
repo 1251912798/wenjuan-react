@@ -5,7 +5,7 @@ import { ComponentStateType } from '@/store/componentSlice'
 const useLoadComponentList = () => {
   const components = useSelector<StateType>(state => state.components) as ComponentStateType
 
-  const { componentList = [], selectId = '', copyComponent = null } = components
+  const { componentList = [], selectId = '', copyComponent } = components
 
   const selectComponent = componentList.find(item => item.fe_id === selectId)
 

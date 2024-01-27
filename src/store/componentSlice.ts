@@ -1,10 +1,12 @@
 import { produce } from 'immer'
 import { createSlice } from '@reduxjs/toolkit'
+import { arrayMove } from '@dnd-kit/sortable'
 import cloneDeep from 'lodash.clonedeep'
 import { getNextSelectId, insertComponent } from './utils'
 import type { CommentPropsType } from '@/component/QuestionComponents/index'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
+
 export type CommentInfoType = {
   fe_id: string
   type: string
@@ -147,6 +149,18 @@ export const componentSlice = createSlice({
         Component.title = action.payload
       }
     }),
+    // 拖拽排序
+    dragSorter: produce(
+      (
+        draft: ComponentStateType,
+        action: PayloadAction<{ oldIndex: number; newIndex: number }>
+      ) => {
+        const { componentList = [] } = draft
+        const { oldIndex, newIndex } = action.payload
+
+        draft.componentList = arrayMove(componentList, oldIndex, newIndex)
+      }
+    ),
   },
 })
 
@@ -162,6 +176,7 @@ export const {
   pasteComponent,
   moveKeyComponent,
   updateComponentTitle,
+  dragSorter,
 } = componentSlice.actions
 
 export default componentSlice.reducer

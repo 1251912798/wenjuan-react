@@ -4,7 +4,14 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 
-import { updateComponentTitle, lockComponent, hideComponent } from '@/store/componentSlice'
+import SortContaniner from '@/component/DragSort/SortContaniner'
+import SortItem from '@/component/DragSort/SortItem'
+import {
+  updateComponentTitle,
+  lockComponent,
+  hideComponent,
+  dragSorter,
+} from '@/store/componentSlice'
 import useLoadComponentList from '@/hooks/useLoadComponentList'
 import { onSelectId } from '@/store/componentSlice'
 
@@ -52,49 +59,63 @@ const Layer = () => {
     dispatch(hideComponent({ fe_id: id, isHeid: isHeid }))
   }
 
+  // 组件列表添加id
+  const componentsListMap = componentList.map(item => {
+    return { ...item, id: item.fe_id }
+  })
+
+  // 拖拽结束
+  const onDragEnd = (oldIndex: number, newIndex: number) => {
+    console.log(newIndex, oldIndex)
+
+    dispatch(dragSorter({ oldIndex, newIndex }))
+  }
+
   return (
-    <>
+    <SortContaniner items={componentsListMap} onDragEnd={onDragEnd}>
       {componentList.map(item => {
         const { fe_id, title, isHeid, isLock } = item
         const slectTitle = styles.active
         const titleTitle = classNames({ [slectTitle]: fe_id === selectId })
 
         return (
-          <div key={fe_id} className={styles.wrap} onClick={() => onSelectCpmponent(fe_id)}>
-            <div className={titleTitle}>
-              {recordTitleId === fe_id ? (
-                <Input
-                  value={title}
-                  onPressEnter={() => setRecordTitleId('')}
-                  onBlur={() => setRecordTitleId('')}
-                  onChange={onChangeTitle}
-                />
-              ) : (
-                title
-              )}
+          <SortItem key={fe_id} id={fe_id}>
+            <div className={styles.wrap} onClick={() => onSelectCpmponent(fe_id)}>
+              <div className={titleTitle}>
+                {recordTitleId === fe_id ? (
+                  <Input
+                    value={title}
+                    onPressEnter={() => setRecordTitleId('')}
+                    onBlur={() => setRecordTitleId('')}
+                    onChange={onChangeTitle}
+                  />
+                ) : (
+                  title
+                )}
+              </div>
+              <div className={styles.hendler}>
+                <Space>
+                  <Button
+                    icon={<EyeInvisibleOutlined />}
+                    shape="circle"
+                    className={isHeid ? '' : styles.btn}
+                    type={isHeid ? 'primary' : 'text'}
+                    onClick={event => onHeidComponent(fe_id, !isHeid as boolean, event)}
+                  ></Button>
+                  <Button
+                    icon={<LockOutlined />}
+                    shape="circle"
+                    className={isLock ? '' : styles.btn}
+                    type={isLock ? 'primary' : 'text'}
+                    onClick={event => onLockComponent(fe_id, event)}
+                  ></Button>
+                </Space>
+              </div>
             </div>
-            <div className={styles.hendler}>
-              <Space>
-                <Button
-                  icon={<EyeInvisibleOutlined />}
-                  shape="circle"
-                  className={isHeid ? '' : styles.btn}
-                  type={isHeid ? 'primary' : 'text'}
-                  onClick={event => onHeidComponent(fe_id, !isHeid as boolean, event)}
-                ></Button>
-                <Button
-                  icon={<LockOutlined />}
-                  shape="circle"
-                  className={isLock ? '' : styles.btn}
-                  type={isLock ? 'primary' : 'text'}
-                  onClick={event => onLockComponent(fe_id, event)}
-                ></Button>
-              </Space>
-            </div>
-          </div>
+          </SortItem>
         )
       })}
-    </>
+    </SortContaniner>
   )
 }
 
