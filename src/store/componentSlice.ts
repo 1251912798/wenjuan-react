@@ -40,10 +40,12 @@ export const componentSlice = createSlice({
     onSelectId: produce((draft: ComponentStateType, action: PayloadAction<string>) => {
       draft.selectId = action.payload
     }),
+
     // 添加组件
     addComponent: produce((draft: ComponentStateType, action: PayloadAction<CommentInfoType>) => {
       insertComponent(draft, action.payload)
     }),
+
     // 更新组件props
     updatedComponentProps: produce(
       (
@@ -157,7 +159,6 @@ export const componentSlice = createSlice({
       ) => {
         const { componentList = [] } = draft
         const { oldIndex, newIndex } = action.payload
-
         draft.componentList = arrayMove(componentList, oldIndex, newIndex)
       }
     ),
