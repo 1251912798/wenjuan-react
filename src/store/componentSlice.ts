@@ -79,7 +79,6 @@ export const componentSlice = createSlice({
       (draft: ComponentStateType, action: PayloadAction<{ fe_id: string; isHeid: boolean }>) => {
         const { componentList = [] } = draft
         const { fe_id, isHeid } = action.payload
-
         let selectId = ''
         if (isHeid) {
           selectId = getNextSelectId(fe_id, componentList)
@@ -166,8 +165,8 @@ export const componentSlice = createSlice({
 })
 
 export const {
-  restComponent,
-  onSelectId,
+  restComponent, //
+  onSelectId, //
   addComponent,
   updatedComponentProps,
   deleteComponent,
@@ -175,7 +174,7 @@ export const {
   lockComponent,
   copySelectComponent,
   pasteComponent,
-  moveKeyComponent,
+  moveKeyComponent, //
   updateComponentTitle,
   dragSorter,
 } = componentSlice.actions

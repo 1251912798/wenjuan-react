@@ -3,7 +3,9 @@ import { StateType } from '@/store/index'
 import { ComponentStateType } from '@/store/componentSlice'
 
 const useLoadComponentList = () => {
-  const components = useSelector<StateType>(state => state.components.present) as ComponentStateType
+  const components = useSelector<StateType>(state => {
+    return state.components.present
+  }) as ComponentStateType
 
   const { componentList = [], selectId = '', copyComponent } = components
 

@@ -69,6 +69,14 @@ const QuestionCard = (props: PropsType) => {
     }
   )
 
+  const onEdit = () => {
+    navigate('/question/edit/' + id)
+  }
+
+  const onStatistics = () => {
+    navigate('/question/stat/' + id)
+  }
+
   // 跳转编辑页面
 
   if (isDeletedState) return null
@@ -95,10 +103,15 @@ const QuestionCard = (props: PropsType) => {
       <Flex justify="space-between">
         <div className={styles.operation_left}>
           <Space>
-            <Button icon={<EditOutlined />} type="text">
+            <Button icon={<EditOutlined />} type="text" onClick={onEdit}>
               编辑问卷
             </Button>
-            <Button icon={<LineChartOutlined />} disabled={!isPublished} type="text">
+            <Button
+              icon={<LineChartOutlined />}
+              disabled={!isPublished}
+              type="text"
+              onClick={onStatistics}
+            >
               数据统计
             </Button>
           </Space>

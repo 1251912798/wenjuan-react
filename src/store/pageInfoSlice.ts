@@ -8,6 +8,7 @@ export type PageInfoType = {
   desc?: string
   js?: string
   css?: string
+  isPublished?: boolean
 }
 
 export const INIT_PAGE_INFO: PageInfoType = {

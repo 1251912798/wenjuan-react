@@ -26,7 +26,7 @@ const useLoadQuestionData = () => {
   // 组件列表加载完成，更新redux
   useEffect(() => {
     if (!data) return
-    const { componentList = [], title = '', desc = '', js = '', css = '' } = data
+    const { componentList = [], title = '', desc = '', js = '', css = '', isPublished } = data
 
     // 默认选中第一个组件
     let selectId = ''
@@ -35,7 +35,7 @@ const useLoadQuestionData = () => {
     }
 
     dispatch(restComponent({ componentList, selectId, copyComponent: null }))
-    dispatch(restPageInfo({ title, desc, js, css }))
+    dispatch(restPageInfo({ title, desc, js, css, isPublished }))
   }, [data])
 
   // 进入编辑页面时(id就已经发生改变)，获取组件列表

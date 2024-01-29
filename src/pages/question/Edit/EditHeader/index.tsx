@@ -108,6 +108,7 @@ const PublishButton = () => {
       },
     }
   )
+
   return (
     <Button type="primary" disabled={loading} icon={loading && <LoadingOutlined />} onClick={pub}>
       发布
@@ -117,12 +118,13 @@ const PublishButton = () => {
 
 // 编辑头部
 const EditHeader = () => {
+  const navigate = useNavigate()
   return (
     <>
       <div className={styles.wrapper}>
         <div className={styles.left}>
           <Space>
-            <Button icon={<LeftOutlined />} type="link">
+            <Button icon={<LeftOutlined />} type="link" onClick={() => navigate(-1)}>
               返回
             </Button>
             <TitleComponent />

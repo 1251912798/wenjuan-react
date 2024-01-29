@@ -29,13 +29,13 @@ const SortContaniner = (props: PropsTyps) => {
       },
     })
   )
-
+  // 拖拽结束
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
     if (!over) return
     if (active.id !== over.id) {
-      const oldIndex = items.findIndex(item => item.fe_id === active.id)
-      const newIndex = items.findIndex(item => item.fe_id === over.id)
+      const oldIndex = items.findIndex(item => item.fe_id === active.id) // 拖拽前索引
+      const newIndex = items.findIndex(item => item.fe_id === over.id) // 拖拽后索引
       onDragEnd(oldIndex, newIndex)
     }
   }
