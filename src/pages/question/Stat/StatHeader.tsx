@@ -1,6 +1,7 @@
 import { useRef } from 'react'
-import { Space, Button, Typography, Input, InputRef, message, Tooltip } from 'antd'
+import { Space, Button, Typography, Input, InputRef, message, Tooltip, Popover } from 'antd'
 import { LeftOutlined, CopyOutlined, QrcodeOutlined } from '@ant-design/icons'
+import { QRCodeCanvas } from 'qrcode.react'
 
 import styles from './statHeader.module.scss'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
@@ -30,13 +31,17 @@ const StatHeader = () => {
 
     const url = `http://localhost:3000/question/${id}`
 
+    const QRCode = <QRCodeCanvas value={url} size={150}></QRCodeCanvas>
+
     return (
       <Space>
         <Input value={url} ref={InputElm} />
         <Tooltip title="拷贝链接">
           <Button icon={<CopyOutlined />} onClick={onCopyUrl} />
         </Tooltip>
-        <Button icon={<QrcodeOutlined />} />
+        <Popover content={QRCode}>
+          <Button icon={<QrcodeOutlined />} />
+        </Popover>
       </Space>
     )
   }

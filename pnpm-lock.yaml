@@ -65,6 +65,9 @@ dependencies:
   nanoid:
     specifier: ^5.0.4
     version: registry.npmmirror.com/nanoid@5.0.4
+  qrcode.react:
+    specifier: ^3.1.0
+    version: registry.npmmirror.com/qrcode.react@3.1.0(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: registry.npmmirror.com/react@18.2.0
