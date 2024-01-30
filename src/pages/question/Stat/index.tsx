@@ -2,6 +2,7 @@ import { Spin, Result, Button } from 'antd'
 
 import StatHeader from './StatHeader'
 import ComponentList from './ComponentList'
+import QuestionStatTable from './QuestionStatTable'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 import { useNavigate } from 'react-router-dom'
@@ -15,7 +16,7 @@ const Stat = () => {
   const { isPublished } = useGetPageInfo()
   const [statSelectId, setStatSelectId] = useState('')
 
-  const [setSelectComponentType] = useState('')
+  const [selectComponentType, setSelectComponentType] = useState('')
 
   const isLoadingComponent = (
     <div style={{ textAlign: 'center', marginTop: '100px' }}>
@@ -49,7 +50,9 @@ const Stat = () => {
             setSelectComponentType={setSelectComponentType}
           />
         </div>
-        <div className={styles.main}>Main</div>
+        <div className={styles.main}>
+          <QuestionStatTable selectComponentType={selectComponentType} />
+        </div>
         <div className={styles.right}>Right</div>
       </>
     )
