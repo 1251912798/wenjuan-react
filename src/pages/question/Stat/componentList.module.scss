@@ -1,0 +1,18 @@
+.component-box {
+  padding: 12px;
+  margin: 12px;
+  border: 2px solid #fff;
+  border-radius: 7px;
+
+  &:hover {
+    border-color: #d9d9d9;
+  }
+
+  .component {
+    pointer-events: none;
+  }
+}
+
+.active-component {
+  border-color: aqua!important;
+}

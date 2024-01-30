@@ -5,14 +5,15 @@ import classnames from 'classnames'
 
 import SortContaniner from '@/component/DragSort/SortContaniner'
 import SortItem from '@/component/DragSort/SortItem'
+import { getComponentType } from '@/component/QuestionComponents/index'
 import { onSelectId, dragSorter } from '@/store/componentSlice'
 import useLoadComponentList from '@/hooks/useLoadComponentList'
 import useCanvasShoortKeys from '@/hooks/useCanvasShortcutKeys'
-import { getComponentType } from '@/component/QuestionComponents/index'
 
 import styles from './EditCanvas.module.scss'
 
 import type { CommentInfoType } from '@/store/componentSlice'
+
 // 获取type对应的组件
 const getCompnent = (item: CommentInfoType) => {
   const { type, props } = item
@@ -26,6 +27,7 @@ const index = (props: { loading: boolean }) => {
   const { loading } = props
   const dispatch = useDispatch()
   const { componentList = [], selectId } = useLoadComponentList()
+
   // 组件选择
   const onselectId = (event: MouseEvent, id: string) => {
     event.stopPropagation()
