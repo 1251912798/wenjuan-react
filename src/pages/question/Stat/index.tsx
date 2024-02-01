@@ -1,14 +1,15 @@
 import { Spin, Result, Button } from 'antd'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import StatHeader from './StatHeader'
 import ComponentList from './ComponentList'
 import QuestionStatTable from './QuestionStatTable'
+import StatCharts from './StatCharts'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
-import { useNavigate } from 'react-router-dom'
 
 import styles from './index.module.scss'
-import { useState } from 'react'
 
 const Stat = () => {
   const navigate = useNavigate()
@@ -53,7 +54,9 @@ const Stat = () => {
         <div className={styles.main}>
           <QuestionStatTable selectComponentType={selectComponentType} />
         </div>
-        <div className={styles.right}>Right</div>
+        <div className={styles.right}>
+          <StatCharts />
+        </div>
       </>
     )
   }
