@@ -52,10 +52,14 @@ const Stat = () => {
           />
         </div>
         <div className={styles.main}>
-          <QuestionStatTable selectComponentType={selectComponentType} />
+          <QuestionStatTable
+            statSelectId={statSelectId}
+            setStatSelectId={setStatSelectId}
+            setSelectComponentType={setSelectComponentType}
+          />
         </div>
         <div className={styles.right}>
-          <StatCharts />
+          <StatCharts statSelectId={statSelectId} selectComponentType={selectComponentType} />
         </div>
       </>
     )

@@ -4,3 +4,5 @@ export const LIST_PAGE_SIZE_KEY = 'pageSize' // 每页条数
 export const LIST_PAGE_KEY = 'page' // 当前页
 
 export const LIST_PAGE_SIZE_DEFAULT = 10 // 默认每页条数
+
+export const STAT_PAGE_SIZE = 10 // 统计页每页条数

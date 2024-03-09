@@ -1,4 +1,5 @@
 export type ParagraphPropsType = {
+  title?: string
   text?: string
   isCenter?: boolean
   // eslint-disable-next-line no-unused-vars

@@ -14,11 +14,15 @@ export type CheckboxPropsType = {
 }
 
 export const CHECKBOX_DEFAULT_PROPS: CheckboxPropsType = {
-  title: '多选标题',
+  title: '多选框',
   isColumn: false,
   list: [
     { value: 'item1', label: '选项1', checked: false },
     { value: 'item2', label: '选项2', checked: false },
     { value: 'item3', label: '选项3', checked: false },
   ],
+}
+
+export type QuseitonCheckboxStatChartPropsType = {
+  stat: Array<{ name: string; count: number }>
 }

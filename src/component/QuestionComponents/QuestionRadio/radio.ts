@@ -14,7 +14,7 @@ export type RadioPropsType = {
 }
 
 export const RADIO_DEFAULT_PROPS: RadioPropsType = {
-  title: '单选标题',
+  title: '单选框',
   isColumn: false,
   options: [
     { value: 'item1', label: '选项1' },
@@ -22,4 +22,8 @@ export const RADIO_DEFAULT_PROPS: RadioPropsType = {
     { value: 'item3', label: '选项3' },
   ],
   value: '',
+}
+
+export type QuseitonRadioStatChartPropsType = {
+  stat: Array<{ name: string; count: number }>
 }

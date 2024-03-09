@@ -6,14 +6,16 @@ import QuestionInfoConf from './QuestionInfo'
 import QuestionTextareaConf from './QuestionTextarea'
 import QuestionRadioConf from './QuestionRadio'
 import QuesitonCheckboxConf from './QuestionCheckbox'
+import QusetionSelectBoxConf from './QusetionSelectBox'
 
 import type { InputPropsType } from './QuestionInput/index'
 import type { TitlePropsType } from './QuestionTitle/index'
 import type { ParagraphPropsType } from './QuestionParagraph'
 import type { InfoPropsType } from './QuestionInfo'
 import type { TextareaPropsType } from './QuestionTextarea'
-import type { RadioPropsType } from './QuestionRadio'
+import type { RadioPropsType, QuseitonRadioStatChartPropsType } from './QuestionRadio'
 import type { CheckboxPropsType } from './QuestionCheckbox/index'
+import type { SelectBoxPropsType, QuseitonSelectStatChartPropsType } from './QusetionSelectBox'
 
 // 各组件的props类型
 export type CommentPropsType =
@@ -24,6 +26,10 @@ export type CommentPropsType =
   | TextareaPropsType
   | RadioPropsType
   | CheckboxPropsType
+  | SelectBoxPropsType
+
+// 各组件的统计类型
+type ComponentStatTypes = QuseitonSelectStatChartPropsType & QuseitonRadioStatChartPropsType
 
 export type ComponentConfigType = {
   title: string
@@ -31,6 +37,7 @@ export type ComponentConfigType = {
   Component: FC<CommentPropsType>
   PropsComponent: FC<CommentPropsType>
   defaultProps: CommentPropsType
+  StatComponent?: FC<ComponentStatTypes>
 }
 
 const componentConfList: ComponentConfigType[] = [
@@ -41,6 +48,7 @@ const componentConfList: ComponentConfigType[] = [
   QuestionTextareaConf,
   QuestionRadioConf,
   QuesitonCheckboxConf,
+  QusetionSelectBoxConf,
 ]
 
 // 组件分组
@@ -58,7 +66,7 @@ export const componentGroup = [
   {
     groupId: 'select',
     title: '用户选择',
-    componentList: [QuestionRadioConf, QuesitonCheckboxConf],
+    componentList: [QuesitonCheckboxConf, QuestionRadioConf, QusetionSelectBoxConf],
   },
 ]
 

@@ -11,9 +11,11 @@ import type { CommentInfoType } from '@/store/componentSlice'
 // 获取type对应的组件
 const getCompnent = (item: CommentInfoType) => {
   const { type, props } = item
+
   const componentConf = getComponentType(type)
   if (!componentConf) return null
   const { Component } = componentConf
+
   return <Component {...props} />
 }
 type PropsTyps = {
@@ -38,6 +40,8 @@ const ComponentList = (props: PropsTyps) => {
             [wrap]: true,
             [active]: statSelectId === fe_id,
           })
+          console.log(item)
+
           return (
             <div
               key={fe_id}
