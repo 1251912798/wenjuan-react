@@ -1,16 +1,18 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { lazy } from 'react'
 import List from '../pages/manage/List'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
-import Edit from '../pages/question/Edit'
-import Star from '../pages/manage/Star'
 import Trash from '../pages/manage/Trash'
-import Stat from '../pages/question/Stat'
+import Star from '../pages/manage/Star'
 import Register from '../pages/Register'
 import Error404 from '../pages/Error404'
 import MainLayout from '../layout/MainLayout'
 import MenuLayout from '../layout/MenuLayout'
 import QuestionLayout from '../layout/QuestionLayout'
+
+const Edit = lazy(/* webpackChunkName: "Edit" */ () => import('../pages/question/Edit'))
+const Stat = lazy(/* webpackChunkName: "Stat" */ () => import('../pages/question/Stat'))
 
 const router = createBrowserRouter([
   {

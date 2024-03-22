@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { Space, Button, Typography, Input, InputRef, message, Tooltip, Popover } from 'antd'
 import { LeftOutlined, CopyOutlined, QrcodeOutlined } from '@ant-design/icons'
 import { QRCodeCanvas } from 'qrcode.react'
@@ -26,7 +26,7 @@ const StatHeader = () => {
     message.success('已复制链接')
   }
 
-  const copyLinkComponent = () => {
+  const copyLinkComponent = useMemo(() => {
     if (!isPublished) return null
 
     const url = `http://localhost:3000/question/${id}`
@@ -44,7 +44,7 @@ const StatHeader = () => {
         </Popover>
       </Space>
     )
-  }
+  }, [isPublished, id])
 
   return (
     <>
@@ -59,7 +59,7 @@ const StatHeader = () => {
             </Title>
           </Space>
         </div>
-        <div className={styles.center}>{copyLinkComponent()}</div>
+        <div className={styles.center}>{copyLinkComponent}</div>
         <div className={styles.right}>
           <Button type="primary" onClick={() => navigate(`/question/edit/${id}`)}>
             编辑问卷
