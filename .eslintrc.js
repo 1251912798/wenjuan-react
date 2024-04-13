@@ -28,11 +28,11 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react'],
   rules: {
-    'react/react-in-jsx-scope': 'off',
-    'no-var': 'warn',
-    'no-unused-vars': 'warn',
-    '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-var-requires': 'off',
+    'react/react-in-jsx-scope': 'off', //不引入react不会报错
+    'no-var': 'warn', // 禁止使用var定义
+    'no-unused-vars': 'warn', // 禁止未使用的变量
+    '@typescript-eslint/no-unused-vars': 'off', // 禁止未使用的变量
+    '@typescript-eslint/no-explicit-any': 'off', // 禁止使用any类型
+    '@typescript-eslint/no-var-requires': 'off', // 禁止使用require导入
   },
 }

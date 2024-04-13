@@ -16,9 +16,7 @@ test('传入属性', () => {
     { value: 'item2', label: 'val2' },
     { value: 'item3', label: 'val3' },
   ]
-  const def = 'item2'
-  render(<Component title="下拉框" options={opt} defaultValue={def} />)
-
+  render(<Component title="下拉框" options={opt} />)
   const t = screen.getByText('下拉框')
   expect(t).toBeInTheDocument()
 })
