@@ -66,8 +66,6 @@ const Layer = () => {
 
   // 拖拽结束
   const onDragEnd = (oldIndex: number, newIndex: number) => {
-    console.log(newIndex, oldIndex)
-
     dispatch(dragSorter({ oldIndex, newIndex }))
   }
 

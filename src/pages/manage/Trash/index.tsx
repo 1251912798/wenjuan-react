@@ -52,7 +52,7 @@ const Trash = () => {
   const { run: recover, loading: recoverLoading } = useRequest(
     async () => {
       for await (const id of selectedIds) {
-        await updatedQusetionApi(id as string | number, { isDeleted: false })
+        await updatedQusetionApi(id as string, { isDeleted: false })
       }
     },
     {
@@ -68,7 +68,7 @@ const Trash = () => {
   // 彻底删除
   const { run: onDelete, loading: deleteLoading } = useRequest(
     async () => {
-      await deleteQuestionApi(selectedIds as string[])
+      return await deleteQuestionApi(selectedIds as string[])
     },
     {
       manual: true,
@@ -129,7 +129,7 @@ const Trash = () => {
               columns={columns}
               rowSelection={rowSelection}
               pagination={false}
-              rowKey={record => record.id}
+              rowKey={record => record._id}
             ></Table>
           </div>
           <div className={styles.footer}>

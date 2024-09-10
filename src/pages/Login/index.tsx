@@ -1,6 +1,6 @@
 import { UserOutlined } from '@ant-design/icons'
 import { Space, Button, Checkbox, Form, Input, message } from 'antd'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useForm } from 'antd/es/form/Form'
 import { useEffect } from 'react'
 import { LoginApi } from '@/api/user'
@@ -10,7 +10,6 @@ import styles from '../Register/Register.module.scss'
 import { useRequest } from 'ahooks'
 
 const Login = () => {
-  const navigate = useNavigate()
   const [form] = useForm()
 
   const removeUser = () => {
@@ -44,11 +43,9 @@ const Login = () => {
     {
       manual: true,
       onSuccess(result) {
-        console.log(result)
-
         message.success('登录成功')
         setToken(result.token)
-        navigate('/manage/list')
+        window.location.href = '/manage/list'
       },
     }
   )

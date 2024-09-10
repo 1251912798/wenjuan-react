@@ -40,7 +40,6 @@ const ComponentList = (props: PropsTyps) => {
             [wrap]: true,
             [active]: statSelectId === fe_id,
           })
-          console.log(item)
 
           return (
             <div

@@ -27,7 +27,7 @@ const QuestionStatTable = (props: PropsTyps) => {
   // 请求数据
   const { loading } = useRequest(
     async () => {
-      const res = await getStatListApi(id, { page: page, pageSize: pageSize })
+      const res = await getStatListApi(id, { page, pageSize })
 
       return res
     },
@@ -63,11 +63,18 @@ const QuestionStatTable = (props: PropsTyps) => {
     }
   })
 
-  const dataSource = list.map((item: any) => ({ ...item, key: item.id }))
+  const dataSource = list.map((item: any) => {
+    for (const k in item) {
+      if (Array.isArray(item[k])) {
+        item[k] = item[k].join(', ')
+      }
+    }
+    return { ...item, key: item._id }
+  })
 
   const TbaleComponent = () => (
     <>
-      <Table dataSource={dataSource} columns={columns} pagination={false}></Table>
+      <Table dataSource={dataSource} columns={columns} pagination={false} />
       <Pagination
         style={{ textAlign: 'center', marginTop: 10 }}
         current={page}
@@ -79,13 +86,13 @@ const QuestionStatTable = (props: PropsTyps) => {
           setPage(page)
           setPageSize(pageSize)
         }}
-      ></Pagination>
+      />
     </>
   )
 
   return (
     <>
-      {loading ? <Spin></Spin> : <Title level={3}>答卷数量：{total}</Title>}
+      {loading ? <Spin /> : <Title level={3}>答卷数量：{total}</Title>}
       {!loading && <TbaleComponent />}
     </>
   )

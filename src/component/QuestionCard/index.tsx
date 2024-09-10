@@ -14,18 +14,19 @@ import {
 } from '@ant-design/icons'
 
 import styles from './QuestionCard.module.scss'
+import dayjs from 'dayjs'
 
 type PropsType = {
-  id: string
+  _id: string
   title: string
   isPublished: boolean
   isStar: boolean
   answerCount: number
-  createTime: string
+  createdAt: string
 }
 
 const QuestionCard = (props: PropsType) => {
-  const { id, title, isPublished, isStar, answerCount, createTime } = props
+  const { _id: id, title, isPublished, isStar, answerCount, createdAt: createTime } = props
   const navigate = useNavigate()
   const [isStart, setIsStart] = useState(isStar)
 
@@ -33,9 +34,7 @@ const QuestionCard = (props: PropsType) => {
   const { loading: copyLoading, run: onCopy } = useRequest(async () => await copyQuestionApi(id), {
     manual: true,
     onSuccess(result) {
-      console.log(result)
-
-      navigate(`/question/edit/${result.id}`)
+      navigate(`/question/edit/${result.id || result._id}`)
       message.success('复制成功')
     },
   })
@@ -43,9 +42,7 @@ const QuestionCard = (props: PropsType) => {
   const [isDeletedState, setIsDeletedState] = useState(false)
   // 删除问卷
   const { run: onDel, loading: delLoading } = useRequest(
-    async () => {
-      await updatedQusetionApi(id, { isDeleted: true })
-    },
+    async () => await updatedQusetionApi(id, { isDeleted: true }),
     {
       manual: true,
       onSuccess() {
@@ -94,8 +91,8 @@ const QuestionCard = (props: PropsType) => {
         <div className={styles.title_right}>
           <Space>
             {isPublished ? <Tag color="blue">已发布</Tag> : <Tag>未发布</Tag>}
-            <p>答卷:{answerCount}</p>
-            <p>{createTime}</p>
+            {answerCount && <p>答卷:{answerCount}</p>}
+            <p>{dayjs(createTime).format('YYYY年MM月DD日')}</p>
           </Space>
         </div>
       </Flex>
@@ -126,12 +123,7 @@ const QuestionCard = (props: PropsType) => {
             >
               {isStart ? '取消标星' : '标星'}
             </Button>
-            <Popconfirm
-              onConfirm={() => onCopy()}
-              title="确定复制该问卷?"
-              okText="确认"
-              cancelText="取消"
-            >
+            <Popconfirm onConfirm={onCopy} title="确定复制该问卷?" okText="确认" cancelText="取消">
               <Button loading={copyLoading} type="text" icon={<CopyOutlined />}>
                 复制
               </Button>

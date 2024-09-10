@@ -4,8 +4,8 @@ import { Typography } from 'antd'
 import { getStatDatasApi } from '@/api/stat'
 import { useRequest } from 'ahooks'
 import { useParams } from 'react-router-dom'
-
 import { getComponentType } from '@/component/QuestionComponents/index'
+import useLoadComponentList from '@/hooks/useLoadComponentList'
 
 type PropsType = {
   statSelectId: string
@@ -15,6 +15,7 @@ type PropsType = {
 const { Title } = Typography
 
 const StatCharts = (props: PropsType) => {
+  const { componentList = [] } = useLoadComponentList()
   const { statSelectId, selectComponentType } = props
   const { id = '' } = useParams()
 
@@ -34,14 +35,21 @@ const StatCharts = (props: PropsType) => {
   )
 
   useEffect(() => {
-    if (statSelectId) run(id, statSelectId)
+    const com = componentList.find(item => item.fe_id === statSelectId)
+    if (
+      com?.type === 'questionSelectBox' ||
+      com?.type === 'questionRadio' ||
+      com?.type === 'questionCheckbox'
+    ) {
+      if (statSelectId) run(id, statSelectId)
+    }
   }, [id, statSelectId])
 
   // 生成统计图表
   const generateChart = () => {
     if (!statSelectId) return <div>未选中组件</div>
     const { StatComponent } = getComponentType(selectComponentType) || {}
-    if (StatComponent == null) return <div>此组件无统计图表</div>
+    if (StatComponent == null || !stat.length) return <div>此组件无统计图表</div>
     return <StatComponent stat={stat} />
   }
 

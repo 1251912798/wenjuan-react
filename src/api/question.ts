@@ -23,7 +23,9 @@ export const updatedQusetionApi = (id: number | string, options: { [key: string]
   http.patch(`/api/question/${id}`, options)
 
 // 复制问卷
-export const copyQuestionApi = (id: number | string) => http.post(`/api/qusetion/duplicate/${id}`)
+export const copyQuestionApi = (id: string) => http.post(`/api/question/copy/${id}`)
 
 // 删除问卷
-export const deleteQuestionApi = (ids: string[]) => http.delete(`/api/question`, { ids })
+export const deleteQuestionApi = (ids: string[]) => {
+  return http.delete(`/api/question`, { data: ids })
+}

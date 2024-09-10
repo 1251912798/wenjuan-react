@@ -26,7 +26,7 @@ const MenuLayout = () => {
   const { loading, run: onCreateQuestion } = useRequest(createQuestionApi, {
     manual: true,
     onSuccess: result => {
-      navigate(`/question/edit/${result.id}`)
+      navigate(`/question/edit/${result.id || result._id}`)
       message.success('创建成功~')
     },
   })

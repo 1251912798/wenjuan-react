@@ -18,13 +18,15 @@ const Star = () => {
       </div>
       <div style={{ textAlign: 'center' }}>
         {loading && <Spin />}
-        {!loading && list.length === 0 && <Empty></Empty>}
+        {!loading && list.length === 0 && <Empty description="暂无数据" />}
         {list.length > 0 &&
-          list.map((item: any) => <QuestionCard key={item.id} {...item}></QuestionCard>)}
+          list.map((item: any) => <QuestionCard key={item._id} {...item}></QuestionCard>)}
       </div>
-      <div className={styles.footer}>
-        <ListPage total={total} />
-      </div>
+      {!!list.length && (
+        <div className={styles.footer}>
+          <ListPage total={total} />
+        </div>
+      )}
     </>
   )
 }

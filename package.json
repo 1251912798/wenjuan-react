@@ -17,6 +17,7 @@
     "antd": "^5.12.5",
     "axios": "^1.6.2",
     "classnames": "^2.5.1",
+    "dayjs": "^1.11.13",
     "immer": "^10.0.3",
     "less": "^4.2.0",
     "lodash.clonedeep": "^4.5.0",

@@ -97,7 +97,7 @@ const List = () => {
       <div style={{ textAlign: 'center' }}>
         {questionList.length > 0 &&
           questionList.map((item: any) => {
-            return <QuestionCard key={item.id} {...item}></QuestionCard>
+            return <QuestionCard key={item._id} {...item}></QuestionCard>
           })}
       </div>
       <div className={styles.footer}>

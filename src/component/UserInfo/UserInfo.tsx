@@ -1,4 +1,4 @@
-import { Button, message } from 'antd'
+import { Button, message, Space } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 
 import { Link, useNavigate } from 'react-router-dom'
@@ -26,10 +26,10 @@ const UserInfo = () => {
 
   const LoggedIn = (
     <div style={{ textAlign: 'right' }}>
-      <span style={{ color: '#fff' }}>
+      <Space style={{ color: '#fff' }}>
         <UserOutlined style={{ color: '#fff' }} />
-        {nickname}
-      </span>
+        {nickname || username}
+      </Space>
       <Button type="link" onClick={onLoginOut}>
         退出
       </Button>
